@@ -1,3 +1,7 @@
+
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     alias(libs.plugins.android.application)
 }
@@ -5,6 +9,12 @@ plugins {
 android {
     namespace = "com.team1.roamio"
     compileSdk = 36
+
+    val localProperties = Properties()
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localProperties.load(FileInputStream(localPropertiesFile))
+    }
 
     defaultConfig {
         applicationId = "com.team1.roamio"
@@ -14,6 +24,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(
+            "String",
+            "GEMINI_API_KEY",
+            "\"${localProperties.getProperty("GEMINI_API_KEY")}\""
+        )
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -59,5 +79,9 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation("com.google.genai:google-genai:1.25.0") //gemini api
+    // Gemini API (Google AI Java SDK)
+    implementation("com.google.ai.client.generativeai:generativeai:0.7.0")
+
+    // 비동기 처리를 위한 ListenableFuture (Guava)
+    implementation("com.google.guava:guava:33.2.1-android")
 }
