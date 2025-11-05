@@ -1,6 +1,7 @@
 package com.team1.roamio.data;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PlanData {
@@ -17,12 +18,12 @@ public class PlanData {
 
     // TODO: 2025-11-03 유저 커스텀 정보 setter(빌더 패턴)
     // 체류 기간
-    public PlanData setStayDuration(int days){
+    public PlanData setStayDuration(int days) throws JSONException {
         userCustomData.put("stay_duration", days);
         return this;
     }
     // 여행 취향
-    public PlanData setPreference(String preference){
+    public PlanData setPreference(String preference) throws JSONException {
         userCustomData.put("travel_preference", preference);
         return this;
     }
@@ -34,7 +35,7 @@ public class PlanData {
     }
     */
     // 숙소 위치(String)
-    public PlanData setHotelLocation(String location){
+    public PlanData setHotelLocation(String location) throws JSONException {
         userCustomData.put("hotel_location",location);
         return this;
     }
@@ -45,6 +46,7 @@ public class PlanData {
     }
     // 빌드
     public JSONObject build(){
-        //TODO : 20251105 AI한테 prompting
+        // TODO: 2025-11-05 데이터 처리용 AI 메서드
+        return null;
     }
 }
