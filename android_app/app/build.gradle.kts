@@ -80,8 +80,7 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     // Gemini API (Google AI Java SDK)
-    implementation("com.google.ai.client.generativeai:generativeai:0.7.0")
+    implementation("com.google.genai:google-genai:1.25.0")
 
-    // 비동기 처리를 위한 ListenableFuture (Guava)
-    implementation("com.google.guava:guava:33.2.1-android")
+    implementation("com.google.android.material:material:1.10.0")
 }
