@@ -45,9 +45,6 @@ public class PlanData {
     }
     // 빌드
     public JSONObject build(){
-        JSONObject result =  new JSONObject();
-        result.put("user_custom", userCustomData);
-        result.put("plans", planDataJson);
-        return result;
+        //TODO : 20251105 AI한테 prompting
     }
 }
