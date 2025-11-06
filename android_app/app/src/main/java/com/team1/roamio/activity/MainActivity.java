@@ -19,11 +19,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-// Material 컴포넌트 import
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 
-// 직접 만든 유틸리티 클래스 import
 import com.team1.roamio.R;
 import com.team1.roamio.data.TravelPlanData;
 import com.team1.roamio.utility.planner.PlanBuildCallback;
@@ -44,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // XML 레이아웃 연결
+        setContentView(R.layout.activity_main);
 
         initializeViews(); // 뷰 바인딩
         buttonGenerate.setOnClickListener(v -> {
@@ -91,15 +89,16 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             duration = Integer.parseInt(durationStr);
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             Toast.makeText(this, "체류 기간은 숫자만 입력하세요.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // 3. 로딩 UI 시작
+        // 로딩 UI 시작
         setLoadingState(true);
 
-        // 4. TravelPlanBuilder 비동기 호출 (콜백 방식)
+        // TravelPlanBuilder 비동기 호출 (콜백 방식)
         TravelPlanBuilder.planDataBuilder()
                 .setVisitCountry(country)
                 .setStayDuration(duration)
@@ -110,14 +109,12 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(TravelPlanData planData) {
-                        // 성공! (메인 스레드에서 실행 보장됨)
                         setLoadingState(false);
                         displayPlan(planData); // 파싱된 객체로 뷰 그리기
                     }
 
                     @Override
                     public void onError(Exception e) {
-                        // 실패! (메인 스레드에서 실행 보장됨)
                         setLoadingState(false);
                         textError.setText("오류 발생:\n" + e.getMessage());
                         textError.setVisibility(View.VISIBLE);
@@ -138,7 +135,8 @@ public class MainActivity extends AppCompatActivity {
             textError.setVisibility(View.GONE);
             layoutResultsContainer.setVisibility(View.GONE);
             layoutResultsContainer.removeAllViews(); // 동적 뷰 모두 제거
-        } else {
+        }
+        else {
             progressBar.setVisibility(View.GONE);
             buttonGenerate.setEnabled(true); // 버튼 다시 활성화
         }
@@ -151,24 +149,24 @@ public class MainActivity extends AppCompatActivity {
     private void displayPlan(TravelPlanData planData) {
         layoutResultsContainer.setVisibility(View.VISIBLE);
 
-        // 1. 전체 요약 (H1)
+        // 전체 요약 (H1)
         addTextView(planData.getPlanSummary(), 20, Typeface.BOLD, 0, 16);
 
-        // 2. 국가 / 일수 (H2)
+        // 국가 / 일수 (H2)
         String metaInfo = "📍 " + planData.getCountry() + " (" + planData.getTotalDays() + "일)";
         addTextView(metaInfo, 16, Typeface.ITALIC, 0, 24);
 
-        // 3. 일자별 계획 루프
+        // 일자별 계획 루프
         for (TravelPlanData.DailyPlan dailyPlan : planData.getDailyPlans()) {
 
             // Day X: 테마 (H3 - 날짜 구분선)
             String dayHeader = "🗓️ Day " + dailyPlan.getDay() + ": " + dailyPlan.getTheme();
             addTextView(dayHeader, 18, Typeface.BOLD, 8, 16);
 
-            // 4. 활동별 루프
+            // 활동별 루프
             for (TravelPlanData.Activity activity : dailyPlan.getActivities()) {
 
-                // 활동 카드(LinearLayout) 생성 - 시각적 구분을 위함
+                // 활동 카드(LinearLayout) 생성
                 LinearLayout activityCard = new LinearLayout(this);
                 activityCard.setOrientation(LinearLayout.VERTICAL);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -178,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 params.setMargins(dpToPx(4), dpToPx(4), dpToPx(4), dpToPx(8));
                 activityCard.setLayoutParams(params);
                 // 카드 배경 및 패딩 설정
-                activityCard.setBackground(getDrawable(R.drawable.bg_card_rounded)); // (아래 bg_card_rounded.xml 필요)
+                activityCard.setBackground(getDrawable(R.drawable.bg_card_rounded));
                 activityCard.setPadding(dpToPx(12), dpToPx(12), dpToPx(12), dpToPx(12));
 
                 // 활동 시간 + 제목
@@ -253,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
 
         linkTv.setText(content);
         linkTv.setMovementMethod(android.text.method.LinkMovementMethod.getInstance()); // 클릭 활성화
-        linkTv.setTextColor(0xFF0000FF); // (colors.xml에 정의된 색상)
+        linkTv.setTextColor(0xFF0000FF);
 
         layout.addView(linkTv);
     }
