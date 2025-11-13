@@ -1,4 +1,4 @@
-package com.team1.roamio.activity;
+package com.team1.roamio.view.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
