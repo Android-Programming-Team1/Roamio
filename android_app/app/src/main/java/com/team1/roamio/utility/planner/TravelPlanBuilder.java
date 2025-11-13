@@ -70,7 +70,7 @@ public class TravelPlanBuilder {
                 String prompt = createPrompt();
 
                 GeminiPro geminiPro = new GeminiPro();
-                String response = geminiPro.callGemini(prompt);
+                String response = geminiPro.callGemini(prompt).get();
 
                 String cleanedResponse = cleanJsonResponse(response);
 
