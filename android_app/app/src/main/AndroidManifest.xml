@@ -14,13 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Roamio">
         <activity
+            android:name=".view.ui.PlanSettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.ui.activity.LayoutActivity"
             android:exported="false" />
         <activity
             android:name=".view.MainActivity2"
             android:exported="false" />
         <activity
-            android:name=".view.ui.activity.MainActivity"
+            android:name=".view.ui.activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
