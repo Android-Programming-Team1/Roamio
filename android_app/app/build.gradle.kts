@@ -79,8 +79,11 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    // Gemini API (Google AI Java SDK)
-    implementation("com.google.genai:google-genai:1.25.0")
+    // OkHttp: REST API 통신을 위한 라이브러리
+    implementation("com.squareup.okhttp3:okhttp:4.12.0") // (최신 버전 확인)
+
+    // Google Play Services: 현재 위치 정보 획득
+    implementation("com.google.android.gms:play-services-location:21.3.0") // (최신 버전 확인)
 
     implementation("com.google.android.material:material:1.10.0")
 }
