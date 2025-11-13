@@ -82,8 +82,8 @@ dependencies {
     // OkHttp: REST API 통신을 위한 라이브러리
     implementation("com.squareup.okhttp3:okhttp:4.12.0") // (최신 버전 확인)
 
-    // Google Play Services: 현재 위치 정보 획득
-    implementation("com.google.android.gms:play-services-location:21.3.0") // (최신 버전 확인)
+    // JSON 파싱을 위한 Gson
+    implementation("com.google.code.gson:gson:2.10.1")
 
     implementation("com.google.android.material:material:1.10.0")
 }
