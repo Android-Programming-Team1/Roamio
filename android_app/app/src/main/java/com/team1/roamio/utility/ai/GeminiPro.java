@@ -23,7 +23,7 @@ public class GeminiPro {
 
     // 1. API 엔드포인트 및 키 (BuildConfig에서 가져오기)
     // 모델 이름을 'gemini-pro' 또는 cURL 예시의 'gemini-1.5-flash' 등으로 변경 가능
-    private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
+    private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
 
     // 중요: API 키는 코드에 하드코딩하지 말고,
     // 'local.properties' -> 'build.gradle.kts' -> 'BuildConfig'를 통해 주입해야 합니다.
