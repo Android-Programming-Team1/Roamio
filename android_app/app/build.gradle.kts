@@ -85,4 +85,7 @@ dependencies {
     implementation("com.google.genai:google-genai:1.25.0")
 
     implementation("com.google.android.material:material:1.10.0")
+
+    // lottie
+    implementation("com.airbnb.android:lottie:6.0.0")
 }

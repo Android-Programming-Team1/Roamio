@@ -57,6 +57,7 @@ public class LayoutActivity extends AppCompatActivity {
         AIRecommendFragment aiRecommendFragment = new AIRecommendFragment();
         StampListFragment stampListFragment = new StampListFragment();
 
+
         v2pAdapter.addFragment(homeFragment);
         v2pAdapter.addFragment(aiRecommendFragment);
         v2pAdapter.addFragment(stampListFragment);
@@ -71,6 +72,8 @@ public class LayoutActivity extends AppCompatActivity {
                 super.onPageSelected(position);
             }
         });
+
+        viewPager2.setUserInputEnabled(false);
 
         new TabLayoutMediator(tabLayout, viewPager2,
                 (tab, position) -> {
