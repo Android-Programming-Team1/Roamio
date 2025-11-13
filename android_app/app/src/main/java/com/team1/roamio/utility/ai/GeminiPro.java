@@ -1,176 +1,245 @@
-package com.team1.roamio.utility.ai;
+package com.team1.roamio.utility.ai; // (GeminiPro의 패키지 경로)
 
-import android.os.Build;
-import androidx.annotation.RequiresApi; // CompletableFuture는 API 24+가 필요합니다
+import android.util.Log;
+// BuildConfig 클래스를 임포트합니다.
+// (자신의 앱 패키지 경로에 맞게 수정하세요)
+import com.team1.roamio.BuildConfig;
 
-import com.google.gson.Gson;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
-@RequiresApi(api = Build.VERSION_CODES.N) // CompletableFuture 사용을 위해 API 24+ 필요
 public class GeminiPro {
 
-    // 1. API 엔드포인트 및 키 (BuildConfig에서 가져오기)
-    // 모델 이름을 'gemini-pro' 또는 cURL 예시의 'gemini-1.5-flash' 등으로 변경 가능
-    private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
-
-    // 중요: API 키는 코드에 하드코딩하지 말고,
-    // 'local.properties' -> 'build.gradle.kts' -> 'BuildConfig'를 통해 주입해야 합니다.
+    private static final String TAG = "GeminiPro";
     private static final String API_KEY = BuildConfig.GEMINI_API_KEY;
+    private static final String MODEL_NAME = "gemini-1.5-flash-latest";
+    private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/" + MODEL_NAME + ":generateContent";
 
-    private final OkHttpClient client;
-    private final Gson gson;
-    public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-
-    public GeminiPro() {
-        this.client = new OkHttpClient();
-        this.gson = new Gson();
+    /**
+     * [신규] Google Search Grounding만 사용하여 Gemini API를 호출합니다.
+     * (위치 정보가 필요 없는 일반적인 질문용)
+     *
+     * @param prompt 사용자 질문
+     * @return 모델의 응답 텍스트를 포함하는 CompletableFuture<String>
+     */
+    public CompletableFuture<String> callGemini(String prompt) {
+        try {
+            // Google Search만 포함하는 JSON 본문 생성
+            String jsonRequestBody = createSimpleJsonBody(prompt);
+            return executeRequest(jsonRequestBody);
+        } catch (Exception e) {
+            // JSON 생성 중 예외 발생 시
+            return CompletableFuture.failedFuture(e);
+        }
     }
 
     /**
-     * Gemini API를 비동기적으로 호출하고 Google Search Grounding을 사용합니다.
+     * [기존] Google Maps 및 Search Grounding을 사용하여 Gemini API를 호출합니다.
+     * (현재 위치 기반 질문용)
      *
-     * @param prompt 사용자 입력 프롬프트
-     * @return API 응답 텍스트를 포함하는 CompletableFuture<String>
+     * @param prompt    사용자 질문
+     * @param latitude  현재 위치의 위도
+     * @param longitude 현재 위치의 경도
+     * @return 모델의 응답 텍스트를 포함하는 CompletableFuture<String>
      */
-    public CompletableFuture<String> callGemini(String prompt) {
+    public CompletableFuture<String> callGemini(String prompt, double latitude, double longitude) {
+        try {
+            // Google Maps + Search가 포함된 JSON 본문 생성
+            String jsonRequestBody = createGroundedJsonBody(prompt, latitude, longitude);
+            return executeRequest(jsonRequestBody);
+        } catch (Exception e) {
+            // JSON 생성 중 예외 발생 시
+            return CompletableFuture.failedFuture(e);
+        }
+    }
 
-        // supplyAsync: 백그라운드 스레드에서 작업을 실행합니다.
+    /**
+     * [리팩토링] 실제 네트워크 요청을 수행하는 비공개 헬퍼 메서드
+     *
+     * @param jsonRequestBody API에 전송할 JSON 문자열
+     * @return 비동기 응답 결과
+     */
+    private CompletableFuture<String> executeRequest(String jsonRequestBody) {
+
         return CompletableFuture.supplyAsync(() -> {
+            HttpURLConnection conn = null;
             try {
-                // 1. 요청 본문(JSON) 생성
-                // cURL 예시에 있던 "tools"와 "google_search" 포함
-                GeminiRequest requestBody = buildRequestBody(prompt);
-                String requestBodyJson = gson.toJson(requestBody);
+                // 1. URL 연결 설정
+                URL url = new URL(API_URL);
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty("x-goog-api-key", API_KEY);
+                conn.setDoOutput(true);
 
-                // 2. OkHttp Request 생성
-                RequestBody body = RequestBody.create(requestBodyJson, JSON);
-                Request request = new Request.Builder()
-                        .url(API_URL)
-                        .addHeader("x-goog-api-key", API_KEY) // cURL 예시와 동일하게 헤더 사용
-                        .addHeader("Content-Type", "application/json")
-                        .post(body)
-                        .build();
+                // 2. 요청 본문 전송
+                try (OutputStream os = conn.getOutputStream()) {
+                    byte[] input = jsonRequestBody.getBytes(StandardCharsets.UTF_8);
+                    os.write(input, 0, input.length);
+                }
 
-                // 3. 동기식 네트워크 호출 실행 (supplyAsync가 백그라운드 스레드이므로 .execute() 사용 가능)
-                try (Response response = client.newCall(request).execute()) {
+                // 3. 응답 코드 확인 및 응답 읽기
+                int responseCode = conn.getResponseCode();
+                InputStream inputStream;
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = conn.getInputStream();
+                } else {
+                    inputStream = conn.getErrorStream();
+                }
 
-                    if (!response.isSuccessful()) {
-                        throw new IOException("API 호출 실패: " + response.code() + " | " + response.body().string());
-                    }
+                String rawResponse = readResponse(inputStream);
 
-                    String responseBodyString = response.body().string();
-
-                    // 4. 응답(JSON) 파싱
-                    GeminiResponse geminiResponse = gson.fromJson(responseBodyString, GeminiResponse.class);
-
-                    // 5. 응답 텍스트 추출
-                    return extractTextFromResponse(geminiResponse);
+                // 4. 응답 파싱
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    return parseSuccessResponse(rawResponse);
+                } else {
+                    String errorMessage = parseErrorResponse(rawResponse, responseCode);
+                    throw new RuntimeException("Gemini API Error: " + errorMessage);
                 }
 
             } catch (Exception e) {
-                // 예외 발생 시 CompletableFuture를 예외적으로 완료시킵니다.
-                // 호출한 쪽의 .exceptionally()에서 이 예외를 처리할 수 있습니다.
-                throw new RuntimeException("Gemini API 호출 중 오류 발생", e);
+                Log.e(TAG, "Error calling Gemini API", e);
+                throw new RuntimeException("Gemini API call failed", e);
+            } finally {
+                if (conn != null) {
+                    conn.disconnect(); // 연결 종료
+                }
             }
         });
     }
 
     /**
-     * API 요청 본문(POJO)을 생성합니다.
+     * [신규] Google Search Grounding만 포함하는 JSON 본문을 생성합니다.
      */
-    private GeminiRequest buildRequestBody(String prompt) {
-        Part part = new Part(prompt);
-        Content content = new Content(Collections.singletonList(part));
-        GoogleSearch googleSearch = new GoogleSearch(); // Grounding을 위한 빈 객체
-        Tool tool = new Tool(googleSearch);
+    private String createSimpleJsonBody(String prompt) throws Exception {
+        JSONObject root = new JSONObject();
 
-        return new GeminiRequest(
-                Collections.singletonList(content),
-                Collections.singletonList(tool)
-        );
+        // 1. contents (사용자 프롬프트)
+        JSONObject textPart = new JSONObject();
+        textPart.put("text", prompt);
+        JSONArray partsArray = new JSONArray();
+        partsArray.put(textPart);
+        JSONObject content = new JSONObject();
+        content.put("role", "user");
+        content.put("parts", partsArray);
+        JSONArray contentsArray = new JSONArray();
+        contentsArray.put(content);
+        root.put("contents", contentsArray);
+
+        // 2. tools (Google Search ONLY)
+        JSONArray toolsArray = new JSONArray();
+        toolsArray.put(new JSONObject().put("google_search", new JSONObject()));
+        root.put("tools", toolsArray);
+
+        // 3. toolConfig 없음 (위치 정보가 없으므로)
+
+        return root.toString();
+    }
+
+
+    /**
+     * [이름 변경] Google Maps + Search Grounding JSON 본문을 생성합니다.
+     * (기존 createJsonBody -> createGroundedJsonBody)
+     */
+    private String createGroundedJsonBody(String prompt, double latitude, double longitude) throws Exception {
+        JSONObject root = new JSONObject();
+
+        // 1. contents
+        JSONObject textPart = new JSONObject();
+        textPart.put("text", prompt);
+        JSONArray partsArray = new JSONArray();
+        partsArray.put(textPart);
+        JSONObject content = new JSONObject();
+        content.put("role", "user");
+        content.put("parts", partsArray);
+        JSONArray contentsArray = new JSONArray();
+        contentsArray.put(content);
+        root.put("contents", contentsArray);
+
+        // 2. tools (Google Search 및 Google Maps)
+        JSONArray toolsArray = new JSONArray();
+        toolsArray.put(new JSONObject().put("google_search", new JSONObject()));
+        toolsArray.put(new JSONObject().put("googleMaps", new JSONObject()));
+        root.put("tools", toolsArray);
+
+        // 3. toolConfig (Google Maps Grounding을 위한 위치 정보)
+        JSONObject latLng = new JSONObject();
+        latLng.put("latitude", latitude);
+        latLng.put("longitude", longitude);
+        JSONObject retrievalConfig = new JSONObject();
+        retrievalConfig.put("latLng", latLng);
+        JSONObject toolConfig = new JSONObject();
+        toolConfig.put("retrievalConfig", retrievalConfig);
+        root.put("toolConfig", toolConfig);
+
+        return root.toString();
     }
 
     /**
-     * API 응답(POJO)에서 텍스트를 추출합니다.
+     * InputStream에서 문자열을 읽어옵니다. (변경 없음)
      */
-    private String extractTextFromResponse(GeminiResponse response) {
-        if (response == null || response.candidates == null || response.candidates.isEmpty() ||
-                response.candidates.get(0).content == null ||
-                response.candidates.get(0).content.parts == null ||
-                response.candidates.get(0).content.parts.isEmpty()) {
-
-            // 안전 설정 등에 의해 차단되었는지 확인
-            if (response != null && response.promptFeedback != null &&
-                    response.promptFeedback.blockReason != null) {
-                return "응답이 차단되었습니다. 이유: " + response.promptFeedback.blockReason;
+    private String readResponse(InputStream inputStream) throws Exception {
+        StringBuilder response = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            String responseLine;
+            while ((responseLine = br.readLine()) != null) {
+                response.append(responseLine.trim());
             }
+        }
+        return response.toString();
+    }
 
-            return "오류: API로부터 유효한 응답을 받지 못했습니다.";
+    /**
+     * 성공적인 API 응답(JSON)을 파싱하여 텍스트를 추출합니다. (변경 없음)
+     */
+    private String parseSuccessResponse(String rawResponse) throws Exception {
+        JSONObject jsonResponse = new JSONObject(rawResponse);
+
+        if (!jsonResponse.has("candidates") || jsonResponse.getJSONArray("candidates").length() == 0) {
+            if (jsonResponse.has("promptFeedback") && jsonResponse.getJSONObject("promptFeedback").has("blockReason")) {
+                String reason = jsonResponse.getJSONObject("promptFeedback").getString("blockReason");
+                throw new RuntimeException("Prompt blocked by safety settings: " + reason);
+            }
+            throw new RuntimeException("No valid candidates found in response.");
         }
 
-        // 첫 번째 후보의 첫 번째 파트 텍스트 반환
-        return response.candidates.get(0).content.parts.get(0).text;
-    }
+        JSONArray candidates = jsonResponse.getJSONArray("candidates");
+        JSONObject firstCandidate = candidates.getJSONObject(0);
+        JSONObject content = firstCandidate.getJSONObject("content");
+        JSONArray parts = content.getJSONArray("parts");
 
-    // --- JSON 직렬화/역직렬화를 위한 POJO 클래스 ---
-    // (이 클래스 내부에 private static으로 선언하거나 별도 파일로 분리)
-
-    // --- 요청 POJOs ---
-    private static class GeminiRequest {
-        final List<Content> contents;
-        final List<Tool> tools;
-
-        GeminiRequest(List<Content> contents, List<Tool> tools) {
-            this.contents = contents;
-            this.tools = tools;
+        StringBuilder resultText = new StringBuilder();
+        for (int i = 0; i < parts.length(); i++) {
+            JSONObject part = parts.getJSONObject(i);
+            if (part.has("text")) {
+                resultText.append(part.getString("text"));
+            }
         }
+
+        return resultText.toString();
     }
 
-    private static class Tool {
-        final GoogleSearch google_search;
-        Tool(GoogleSearch google_search) { this.google_search = google_search; }
-    }
-
-    private static class GoogleSearch {
-        // cURL의 {"google_search": {}} 를 표현하기 위한 빈 클래스
-    }
-
-    // --- 공통 POJOs ---
-    private static class Content {
-        final List<Part> parts;
-        Content(List<Part> parts) { this.parts = parts; }
-    }
-
-    private static class Part {
-        final String text;
-        Part(String text) { this.text = text; }
-    }
-
-    // --- 응답 POJOs ---
-    private static class GeminiResponse {
-        List<Candidate> candidates;
-        PromptFeedback promptFeedback;
-    }
-
-    private static class Candidate {
-        Content content;
-        // finishReason, safetyRatings 등 필요에 따라 추가
-    }
-
-    private static class PromptFeedback {
-        String blockReason;
-        // safetyRatings 등 필요에 따라 추가
+    /**
+     * 오류 API 응답(JSON)을 파싱하여 오류 메시지를 추출합니다. (변경 없음)
+     */
+    private String parseErrorResponse(String rawResponse, int responseCode) {
+        try {
+            JSONObject jsonResponse = new JSONObject(rawResponse);
+            if (jsonResponse.has("error") && jsonResponse.getJSONObject("error").has("message")) {
+                return jsonResponse.getJSONObject("error").getString("message");
+            }
+        } catch (Exception e) {
+            Log.w(TAG, "Failed to parse error JSON", e);
+        }
+        return "HTTP Error " + responseCode + ": " + rawResponse;
     }
 }
