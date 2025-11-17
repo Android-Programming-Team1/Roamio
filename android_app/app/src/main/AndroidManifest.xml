@@ -20,9 +20,6 @@
             android:name=".view.ui.activity.LayoutActivity"
             android:exported="false" />
         <activity
-            android:name=".view.MainActivity2"
-            android:exported="false" />
-        <activity
             android:name=".view.ui.activity.SplashActivity"
             android:exported="true">
             <intent-filter>
