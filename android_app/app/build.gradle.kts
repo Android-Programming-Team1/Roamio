@@ -88,4 +88,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 
     implementation("com.google.android.material:material:1.10.0")
+
+    // lottie
+    implementation("com.airbnb.android:lottie:6.0.0")
 }
