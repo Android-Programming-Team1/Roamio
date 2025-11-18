@@ -73,12 +73,12 @@ public class NearbyAttractionRecommender {
     private String createPrompt(double latitude, double longitude) {
         // Grounding으로 위치가 전달되지만, 프롬프트에도 명시하여 AI가 컨텍스트를 확실히 인지하도록 함
         // JSON 형식을 매우 구체적으로 지시하여 파싱 오류를 줄임
-        return "현재 내 위치(약 " + latitude + ", " + longitude + ") 주변의 인기 있는 관광지나 맛집 5곳을 추천해줘.\n" +
+        return "현재 내 위치(약 " + latitude + ", " + longitude + ") 주변의 인기 있는 관광지나 맛집 3곳을 추천해줘.\n" +
                 "응답은 반드시 유효한 JSON 배열 형식이어야 해. JSON 배열 앞뒤로 설명이나 ```json 같은 마크다운을 절대 붙이지 마.\n" +
-                "배열의 각 객체는 다음 5개의 키를 가져야 해:\n" +
+                "배열의 각 객체는 다음 6개의 키를 가져야 해:\n" +
                 "1. name: (String) 장소 이름\n" +
                 "2. address: (String) 주소\n" +
-                "3. category: (String) 카테고리 (예: '음식점', '명소', '박물관', '공원')\n" +
+                "3. category: (String) 카테고리. 카테고리는 다음 종류중 하나만 선택 가능(음식점, 카페, 명소, 공원, 쇼핑, 박물관, 미술관, 엔터테이먼트, 바)\n" +
                 "4. starPoint: (Number) 1점에서 5점 사이의 숫자 별점\n" +
                 "5. uri: (String) 해당 장소의 Google 지도 URL 또는 공식 웹사이트 URL";
     }

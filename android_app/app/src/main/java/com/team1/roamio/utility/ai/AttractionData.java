@@ -1,5 +1,16 @@
 package com.team1.roamio.utility.ai;
 
+import android.os.Looper;
+import android.sax.Element;
+
+import org.jsoup.Jsoup;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+
 public class AttractionData {
     private String name;      // 관광지 이름
     private String address;   // 위치
@@ -41,6 +52,7 @@ public class AttractionData {
         return uri;
     }
 
+
     // Setters
     public void setName(String name) {
         this.name = name;
@@ -62,12 +74,15 @@ public class AttractionData {
         this.uri = uri;
     }
 
+
     @Override
     public String toString() {
         return "AttractionData{" +
                 "name='" + name + '\'' +
                 ", category='" + category + '\'' +
                 ", starPoint=" + starPoint +
+                ", uri='" + uri + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }
