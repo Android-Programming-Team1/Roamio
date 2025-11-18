@@ -87,10 +87,6 @@ public class AIRecommendFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ai_recommend, container, false);
 
-        if (!checkPermissions(view)) {
-            ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, REQUEST_PERMISSION_CODE);
-        }
-
         initView(view);
 
         return view;
@@ -111,7 +107,8 @@ public class AIRecommendFragment extends Fragment {
 
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return null;
+
+            ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, REQUEST_PERMISSION_CODE);
         }
 
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -133,6 +130,11 @@ public class AIRecommendFragment extends Fragment {
 
     private void initView(View view) {
         nearbyAttractionRecommender = new NearbyAttractionRecommender();
+
+        if (!checkPermissions(view)) {
+            ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, REQUEST_PERMISSION_CODE);
+        }
+
         double[] location = getLocation();
 
         if(location == null) {
