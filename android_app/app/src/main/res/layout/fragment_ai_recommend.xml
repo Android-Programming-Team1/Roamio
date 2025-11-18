@@ -92,7 +92,7 @@
                         android:layout_height="match_parent">
 
                         <ImageButton
-                            android:id="@+id/btn_recomend_imgae2"
+                            android:id="@+id/btn_place1"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginBottom="60dp"
@@ -102,11 +102,10 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:src="@drawable/img_sample_background1" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/text_view22"
+                            android:id="@+id/txt_place_score1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -117,13 +116,13 @@
                             app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/txt_place_name1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="국민대학교"
+                            android:text="데이터 불러오는 중"
                             android:textColor="@color/black"
-                            android:textSize="32sp"
+                            android:textSize="28sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toTopOf="@+id/imageView2"
                             app:layout_constraintStart_toStartOf="@+id/imageView2" />
@@ -135,7 +134,7 @@
                             android:layout_marginStart="40dp"
                             android:layout_marginBottom="40dp"
                             android:src="@drawable/img_star"
-                            app:layout_constraintBottom_toBottomOf="@+id/btn_recomend_imgae2"
+                            app:layout_constraintBottom_toBottomOf="@+id/btn_place1"
                             app:layout_constraintStart_toStartOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -163,7 +162,7 @@
                         android:layout_height="match_parent">
 
                         <ImageButton
-                            android:id="@+id/btn_recomend_imgae1"
+                            android:id="@+id/btn_place2"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginBottom="60dp"
@@ -173,11 +172,10 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:src="@drawable/img_sample_background1" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/text_view11"
+                            android:id="@+id/txt_place_score2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -188,13 +186,13 @@
                             app:layout_constraintTop_toTopOf="@+id/imageView1" />
 
                         <TextView
-                            android:id="@+id/textView1"
+                            android:id="@+id/txt_place_name2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="국민대학교"
+                            android:text="데이터 불러오는 중"
                             android:textColor="@color/black"
-                            android:textSize="32sp"
+                            android:textSize="28sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toTopOf="@+id/imageView1"
                             app:layout_constraintStart_toStartOf="@+id/imageView1" />
@@ -206,7 +204,7 @@
                             android:layout_marginStart="40dp"
                             android:layout_marginBottom="40dp"
                             android:src="@drawable/img_star"
-                            app:layout_constraintBottom_toBottomOf="@+id/btn_recomend_imgae1"
+                            app:layout_constraintBottom_toBottomOf="@+id/btn_place2"
                             app:layout_constraintStart_toStartOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -234,7 +232,7 @@
                         android:layout_height="match_parent">
 
                         <ImageButton
-                            android:id="@+id/btn_recomend_imgae3"
+                            android:id="@+id/btn_place3"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginBottom="60dp"
@@ -244,11 +242,10 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:src="@drawable/img_sample_background1" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/text_view33"
+                            android:id="@+id/txt_place_score3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -259,13 +256,13 @@
                             app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
                         <TextView
-                            android:id="@+id/textView3"
+                            android:id="@+id/txt_place_name3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="국민대학교"
+                            android:text="데이터 불러오는 중"
                             android:textColor="@color/black"
-                            android:textSize="32sp"
+                            android:textSize="28sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toTopOf="@+id/imageView3"
                             app:layout_constraintStart_toStartOf="@+id/imageView3" />
@@ -277,7 +274,7 @@
                             android:layout_marginStart="40dp"
                             android:layout_marginBottom="40dp"
                             android:src="@drawable/img_star"
-                            app:layout_constraintBottom_toBottomOf="@+id/btn_recomend_imgae3"
+                            app:layout_constraintBottom_toBottomOf="@+id/btn_place3"
                             app:layout_constraintStart_toStartOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
