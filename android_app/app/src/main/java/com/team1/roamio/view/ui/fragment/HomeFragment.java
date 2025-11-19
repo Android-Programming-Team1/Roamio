@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.team1.roamio.R;
-import com.team1.roamio.view.ui.PlanSettingActivity;
-import com.team1.roamio.view.ui.activity.LayoutActivity;
+import com.team1.roamio.view.ui.activity.PlanSettingActivity;
 
 /**
  * A simple {@link Fragment} subclass.
