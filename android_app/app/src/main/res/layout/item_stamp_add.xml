@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="130dp"
+    android:background="@drawable/stamp_list_rounded"
+    android:padding="16dp">
+
+    <ImageButton
+        android:id="@+id/add_stamp_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@null"
+        android:src="@drawable/stamp_00"
+        android:scaleType="centerCrop"
+        tools:ignore="MissingConstraints" />
+</androidx.constraintlayout.widget.ConstraintLayout>
