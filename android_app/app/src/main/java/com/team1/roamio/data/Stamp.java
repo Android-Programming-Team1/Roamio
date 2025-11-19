@@ -1,12 +1,14 @@
 package com.team1.roamio.data;
 
 public class Stamp {         // DB 기본키
-    private long id;
-    private long countryId;
-    private Long stampedAt;
-    private Integer imageResId;
-    private String imageUri;
-    private String imageUrl;
+    private long id;            // Stamp ID
+    private long countryId;     // Country Id 외래키 참조
+    private Long stampedAt;     // 스탬프 시각
+    private Integer imageResId; // 스탬프 이미지
+    private String imageUri;    // 로컬 이미지, 사진을 스탬프로 등록할 때 이용
+    private String imageUrl;    // 외부 이미지, 확장성 고려
+
+    public Stamp() {}
 
     public Stamp(long id, long countryId, Long stampedAt, Integer imageResId, String imageUri, String imageUrl) {
         this.id = id;

@@ -20,9 +20,10 @@ public class TravelDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createCountries = "CREATE TABLE " + TABLE_COUNTRIES + " (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "region TEXT," +
                 "name TEXT NOT NULL," +
+                "city TEXT," +
                 "description TEXT," +
-                "flagResId INTEGER," +
                 "photoUrl TEXT" +
                 ");";
 
