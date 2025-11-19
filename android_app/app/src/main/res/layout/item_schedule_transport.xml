@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <FrameLayout
+        android:layout_width="72dp"
+        android:layout_height="80dp"> <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="#CCCCCC" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_transport_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이동 내용"
+        android:textColor="#666666"
+        android:textSize="14sp" />
+</LinearLayout>
