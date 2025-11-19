@@ -99,4 +99,7 @@ dependencies {
 
     //JSoup
     implementation("org.jsoup:jsoup:1.17.2")
+
+    // item view
+    implementation("androidx.recyclerview:recyclerview:1.3.0")
 }

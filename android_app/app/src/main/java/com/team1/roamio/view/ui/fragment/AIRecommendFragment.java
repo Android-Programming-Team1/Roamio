@@ -87,7 +87,7 @@ public class AIRecommendFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ai_recommend, container, false);
 
-        initView(view);
+        while(!initView(view)) { Log.d("initView", "initView fail"); }
 
         return view;
     }
@@ -109,6 +109,8 @@ public class AIRecommendFragment extends Fragment {
                 ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, REQUEST_PERMISSION_CODE);
+
+            return null;
         }
 
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -118,7 +120,6 @@ public class AIRecommendFragment extends Fragment {
         if (location != null) {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
-
         }
 
         double[] ret = new double[2];
@@ -128,7 +129,7 @@ public class AIRecommendFragment extends Fragment {
         return ret;
     }
 
-    private void initView(View view) {
+    private boolean initView(View view) {
         nearbyAttractionRecommender = new NearbyAttractionRecommender();
 
         if (!checkPermissions(view)) {
@@ -146,8 +147,10 @@ public class AIRecommendFragment extends Fragment {
             placeName2.setText("위치 권한 없음");
             placeName3.setText("위치 권한 없음");
 
-            return;
+            return false;
         }
+
+        final boolean[] isFail = {false};
 
         nearbyAttractionRecommender.recommend(location[0], location[1], new RecommendationCallback() {
             @Override
@@ -217,8 +220,11 @@ public class AIRecommendFragment extends Fragment {
             @Override
             public void onError(Exception e) {
                 Log.e("error_ai_recommend", e.getMessage());
+                isFail[0] = true;
             }
         });
+
+        return !isFail[0];
     }
 
     private void setButtonImg(ImageButton btnPlace, AttractionData attractionData) {
