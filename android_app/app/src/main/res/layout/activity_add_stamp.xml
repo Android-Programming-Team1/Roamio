@@ -13,14 +13,14 @@
         android:hint="Country ID 입력"
         android:inputType="number" />
 
-    <!-- Image Res ID 입력 -->
+    <!-- Image Name 입력 (drawable 리소스 이름, 예: stamp_japan) -->
     <EditText
-        android:id="@+id/edit_image_res_id"
+        android:id="@+id/edit_image_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Image Resource ID 입력"
-        android:inputType="number" />
+        android:hint="Image name (e.g. stamp_japan)"
+        android:inputType="text" />
 
     <!-- 저장 버튼 -->
     <Button
