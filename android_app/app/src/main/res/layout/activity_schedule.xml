@@ -35,7 +35,11 @@
                 android:text="YYYY.MM.DD"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:textColor="#000000"/>
+                android:textColor="#000000"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="8dp"/>
 
             <Space
                 android:layout_width="0dp"
@@ -49,7 +53,11 @@
                 android:text="여행 제목"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:textColor="#000000"/>
+                android:textColor="#000000"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="8dp"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

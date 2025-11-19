@@ -25,13 +25,32 @@
           <theme>@style/Theme.Roamio</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/android_app/app/src/main/res/layout/activity_schedule.xml">
+        <config>
+          <theme>@style/Theme.Roamio</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/android_app/app/src/main/res/layout/item_schedule_location.xml">
+        <config>
+          <theme>@style/Theme.Roamio</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/android_app/app/src/main/res/layout/item_schedule_transport.xml">
+        <config>
+          <theme>@style/Theme.Roamio</theme>
+        </config>
+      </layout>
     </layouts>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a652c9b4-9c78-4c53-95e4-cbc425a164c8" name="Changes" comment="" />
+    <list default="true" id="a652c9b4-9c78-4c53-95e4-cbc425a164c8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/java/com/team1/roamio/utility/planner/ScheduleActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/java/com/team1/roamio/utility/planner/ScheduleActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/res/layout/activity_schedule.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/res/layout/activity_schedule.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -66,6 +85,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="layoutResourceFile" />
         <option value="Class" />
       </list>
     </option>
