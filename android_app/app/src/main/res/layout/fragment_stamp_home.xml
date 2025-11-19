@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.ui.fragment.StampListFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F3FBFF"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:clickable="false"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_stamp_home" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewImage1"
+        android:layout_width="358dp"
+        android:layout_height="452dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="160dp"
+        app:cardCornerRadius="20dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardElevation="6dp"   >
+
+        <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/stamp_home_rounded_01" />
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="352dp"
+        android:layout_height="212dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="164dp"
+        android:src="@drawable/stamp_home_rounded_02"
+        android:translationZ="12dp" />
+
+    <ImageView
+        android:id="@+id/stamp_image_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="233dp"
+        android:layout_marginTop="225dp"
+        android:src="@drawable/stamp_03"
+        android:translationZ="12dp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="352dp"
+        android:layout_height="221dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="380dp"
+        android:background="@drawable/stamp_home_rounded_02"
+        android:translationZ="12dp">
+
+        <!-- 첫 번째 가로선 -->
+        <View
+            android:id="@+id/h_line_1"
+            android:layout_width="290dp"
+            android:layout_height="1dp"
+            android:background="#BBBBBB"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="33dp"/>
+
+        <!-- 두 번째 가로선 -->
+        <View
+            android:id="@+id/h_line_2"
+            android:layout_width="290dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="@drawable/stamp_dash_line"
+            android:layerType="software"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/h_line_1"
+            android:layout_marginTop="40dp"/>
+
+        <!-- 세로선 -->
+        <View
+            android:id="@+id/h_line_3"
+            android:layout_width="1dp"
+            android:layout_height="35dp"
+            android:background="#BBBBBB"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/h_line_1"
+            android:layout_marginStart="169dp"/>
+
+        <!-- 세 번째 가로선 -->
+        <View
+            android:id="@+id/h_line_4"
+            android:layout_width="290dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="@drawable/stamp_dash_line"
+            android:layerType="software"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="23dp"/>
+
+        <!-- 나라 이름 -->
+        <LinearLayout
+            android:id="@+id/text_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="42dp"
+            android:layout_marginTop="11dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/h_line_1"
+            >
+
+            <TextView
+                android:id="@+id/text_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="일본 JAPAN"
+                android:textStyle="bold"
+                android:textSize="13sp"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <!-- 왼쪽 이미지 -->
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewImage2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/h_line_2"
+            android:layout_marginTop="14dp"
+            android:layout_marginStart="38dp"
+            android:adjustViewBounds="true"
+            app:cardCornerRadius="20dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="94dp"
+                android:layout_height="94dp"
+                android:src="@drawable/stamp_passport_city"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 오른쪽 텍스트 영역 -->
+        <LinearLayout
+            android:id="@+id/text_container_inner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="37dp"
+            app:layout_constraintStart_toEndOf="@id/cardViewImage2"
+            app:layout_constraintTop_toTopOf="@+id/h_line_2"
+            app:layout_constraintBottom_toBottomOf="@+id/h_line_4">
+
+            <TextView
+                android:id="@+id/text_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="국가"
+                android:textSize="10sp"
+                android:textColor="#476E8E" />
+
+            <TextView
+                android:id="@+id/text_city_under"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:text="TOKYO, Japan"
+                android:textSize="9sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="날짜"
+                android:textSize="10sp"
+                android:textColor="#476E8E" />
+
+            <TextView
+                android:id="@+id/text_date_under"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:text="April 26, 2025 – April 28, 2025"
+                android:textSize="9sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/text_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="추억의 장소"
+                android:textSize="10sp"
+                android:textColor="#476E8E" />
+
+            <TextView
+                android:id="@+id/text_place_under"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:text="긴자 거리, 신주쿠의 밤"
+                android:textSize="9sp"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <View
+        android:layout_width="187dp"
+        android:layout_height="4dp"
+        android:background="#88E7FF"
+        android:layout_marginStart="61dp"
+        android:layout_marginTop="716dp"/>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="63dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="682dp"
+        android:layout_marginStart="302dp"
+        android:background="@null"
+        android:src="@drawable/ic_roamio"/>
+
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="46dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/btn_back" />
+
+</FrameLayout>
