@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageButton
+            android:id="@+id/imageButton6"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="40dp"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/btn_back" />
+
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/bg_home_fragment" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="247dp"
+            android:layout_height="208dp"
+            android:layout_marginTop="150dp"
+            app:srcCompat="@drawable/ic_roamio"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/styleTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="어떤 여행 스타일을 선호하시나요?"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/imageView7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <Button
+            android:id="@+id/stylebutton1"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="12dp"
+            android:backgroundTint="@color/white"
+            android:text="카페·맛집"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/stylebutton2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/styleTitle" />
+
+
+        <Button
+            android:id="@+id/stylebutton2"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:text="액티비티"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintTop_toTopOf="@+id/stylebutton1"
+            app:layout_constraintStart_toEndOf="@+id/stylebutton1"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <Button
+            android:id="@+id/stylebutton3"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:backgroundTint="@color/white"
+            android:text="문화·예술"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/stylebutton1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/stylebutton4" />
+
+        <Button
+            android:id="@+id/stylebutton4"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:backgroundTint="@color/white"
+            android:text="문화·예술"
+            android:textColor="@color/black"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintTop_toTopOf="@+id/stylebutton3"
+            app:layout_constraintStart_toEndOf="@+id/stylebutton3"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <Button
+            android:id="@+id/stylebutton5"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="12dp"
+            android:backgroundTint="@color/white"
+            android:text="자연·야외"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@+id/stylebutton6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stylebutton3" />
+
+        <Button
+            android:id="@+id/stylebutton6"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:text="쇼핑"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/stylebutton5"
+            app:layout_constraintTop_toBottomOf="@+id/stylebutton4" />
+
+
+        <Button
+            android:id="@+id/finalbutton"
+            android:layout_width="147dp"
+            android:layout_height="83dp"
+            android:backgroundTint="@color/white"
+            android:textSize="16dp"
+            android:text="결과 확인"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/stylebutton6"
+            app:layout_constraintStart_toStartOf="@+id/stylebutton5"
+            app:layout_constraintTop_toBottomOf="@+id/stylebutton5" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

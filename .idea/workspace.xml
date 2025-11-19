@@ -1,86 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AndroidLayouts">
-    <shared>
-      <config>
-        <device id="_device_class_phone" />
-        <device id="_device_class_foldable" />
-        <device id="_device_class_desktop" />
-        <device id="pixel_9_pro" />
-        <device id="pixel_9_pro_xl" />
-        <device id="automotive_portrait" />
-        <device id="wearos_large_round" />
-        <device id="_device_class_tablet" />
-        <device id="pixel_9_pro_fold" />
-      </config>
-    </shared>
-    <layouts>
-      <layout url="file://$PROJECT_DIR$/android_app/app/src/main/res/drawable/bg_card_rounded.xml">
-        <config>
-          <theme>@style/Theme.Roamio</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/android_app/app/src/main/res/drawable/ic_launcher_background.xml">
-        <config>
-          <theme>@style/Theme.Roamio</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/android_app/app/src/main/res/drawable/ic_launcher_foreground.xml">
-        <config>
-          <theme>@style/Theme.Roamio</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/android_app/app/src/main/res/layout/activity_layout.xml">
-        <config>
-          <theme>@style/Theme.Roamio</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/android_app/app/src/main/res/layout/activity_plan_setting.xml">
-        <config>
-          <theme>@style/Theme.Roamio</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/android_app/app/src/main/res/layout/activity_splash.xml">
-        <config>
-          <theme>@style/Theme.Roamio</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/android_app/app/src/main/res/layout/fragment_ai_recommend.xml">
-        <config>
-          <theme>@style/Theme.Roamio</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/android_app/app/src/main/res/layout/fragment_home.xml">
-        <config>
-          <theme>@style/Theme.Roamio</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/android_app/app/src/main/res/layout/fragment_my_page.xml">
-        <config>
-          <theme>@style/Theme.Roamio</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/android_app/app/src/main/res/layout/fragment_stamp_list.xml">
-        <config>
-          <theme>@style/Theme.Roamio</theme>
-        </config>
-      </layout>
-    </layouts>
-  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84381637-90f1-40ba-b2de-c0d42c3abb32" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_art_gallery.png" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_art_gallery.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_bar.png" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_bar.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_cafe.png" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_cafe.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_entertainment.png" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_entertainment.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_landmark.png" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_landmark.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_museum.png" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_museum.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_park.png" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_park.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_restaurant.png" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_restaurant.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_shopping.png" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/res/drawable/img_shopping.png" afterDir="false" />
+    <list default="true" id="c08c6346-e084-4b08-a280-0ddbf4a92b3a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/android_app/app/src/main/java/com/team1/roamio/utility/planner/SavedUserData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android_app/app/src/main/java/com/team1/roamio/view/ui/activity/ActivityPlanning1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android_app/app/src/main/java/com/team1/roamio/view/ui/activity/ActivityPlanning2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android_app/app/src/main/java/com/team1/roamio/view/ui/activity/ActivityPlanning3.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android_app/app/src/main/java/com/team1/roamio/view/ui/activity/ActivityPlanning4.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android_app/app/src/main/java/com/team1/roamio/view/ui/activity/ActivityPlanning5.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android_app/app/src/main/java/com/team1/roamio/view/ui/activity/ActivityPlanningResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android_app/app/src/main/res/layout/activity_planning_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android_app/app/src/main/res/layout/activity_planning_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android_app/app/src/main/res/layout/activity_planning_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android_app/app/src/main/res/layout/activity_planning_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android_app/app/src/main/res/layout/activity_planning_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android_app/app/src/main/res/layout/activity_planning_result.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android_app/app/src/main/res/layout/layout_resource_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android_app/app/src/main/res/layout/layout_resource_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android_app/.idea/deviceManager.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/.idea/deviceManager.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android_app/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android_app/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/java/com/team1/roamio/view/ui/PlanSettingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/java/com/team1/roamio/view/ui/activity/PlanSettingActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/java/com/team1/roamio/view/ui/fragment/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/java/com/team1/roamio/view/ui/fragment/HomeFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/res/layout/activity_plan_setting.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/res/layout/activity_plan_setting.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android_app/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android_app/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/android_app/gradle/libs.versions.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,13 +44,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 2
-}</component>
-  <component name="ProjectId" id="35QX81FvZ79wu1aXiwXOfIhdC27" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 2
+}]]></component>
+  <component name="ProjectId" id="35hmBOXknDEcoIdA2CGVDLDT2Bu" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -112,37 +61,17 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "dev/ai__recommend",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/GitHub/Roamio",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+    "cidr.known.project.marker": "true"
   }
 }]]></component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="84381637-90f1-40ba-b2de-c0d42c3abb32" name="Changes" comment="" />
-      <created>1763043105456</created>
+      <changelist id="c08c6346-e084-4b08-a280-0ddbf4a92b3a" name="Changes" comment="" />
+      <created>1763570542051</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1763043105456</updated>
+      <updated>1763570542051</updated>
     </task>
     <servers />
-  </component>
-  <component name="play_dynamic_filters_status">
-    <option name="appIdToCheckInfo">
-      <map>
-        <entry key="com.team1.roamio">
-          <value>
-            <CheckInfo lastCheckTimestamp="1763043120836" />
-          </value>
-        </entry>
-        <entry key="com.team1.roamio.test">
-          <value>
-            <CheckInfo lastCheckTimestamp="1763043120866" />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
 </project>
