@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.team1.roamio.R;
+import com.team1.roamio.data.CountryDao;
 import com.team1.roamio.data.Stamp;
 import com.team1.roamio.data.StampDao;
 
@@ -64,25 +65,38 @@ public class StampListFragment extends Fragment {
 
     /** 스탬프 목록 UI 적용 */
     private void applyStampData(View item, Stamp stamp) {
-        ImageButton img = item.findViewById(R.id.stamp_image);
-        TextView country = item.findViewById(R.id.text_country);
-        TextView date = item.findViewById(R.id.text_date);
-        TextView desc = item.findViewById(R.id.text_desc);
+        ImageButton imgButton = item.findViewById(R.id.stamp_image);
+        TextView countryText = item.findViewById(R.id.text_country);
+        TextView dateText = item.findViewById(R.id.text_date);
 
-        // 이미지가 없으면 기본 이미지 출력
-        if (stamp.getImageResId() != 0) {
-            img.setImageResource(stamp.getImageResId());
-        } else {
-            img.setImageResource(R.drawable.stamp_00);
+        // --- 1. 국가 이름 조회 ---
+        CountryDao countryDao = new CountryDao(requireContext());
+        String countryName = countryDao.getCountryNameById(stamp.getCountryId());
+        if (countryName == null) {
+            countryName = "Unknown";
         }
+        countryText.setText(countryName);
 
-        country.setText("ID: " + stamp.getCountryId());
-
+        // --- 2. 날짜 포맷 ---
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
-        date.setText(sdf.format(stamp.getStampedAt()));
+        String formattedDate = sdf.format(stamp.getStampedAt());
+        dateText.setText(formattedDate);
 
-        desc.setText(stamp.getImageUrl() != null ? stamp.getImageUrl() : "No description");
+        // --- 3. 이미지 동적 로딩 ---
+        String stampName = stamp.getImageName(); // stamps 테이블의 stampname 컬럼
+        int resId = getContext().getResources().getIdentifier(
+                stampName, "drawable", getContext().getPackageName()
+        );
+
+        if (resId != 0) {
+            imgButton.setImageResource(resId);
+        } else {
+            imgButton.setImageResource(R.drawable.stamp_00); // 기본 이미지
+        }
     }
+
+
+
 
     /** 추가하기 버튼 */
     private void setupAddButton(View item) {
@@ -94,7 +108,7 @@ public class StampListFragment extends Fragment {
                     0,
                     1,                          // 기본 countryId
                     System.currentTimeMillis(), // 시간
-                    R.drawable.stamp_00,        // 기본 이미지
+                    "stamp_00",        // 기본 이미지
                     null,
                     "New Stamp"
             );
