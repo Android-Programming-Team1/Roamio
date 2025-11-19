@@ -21,9 +21,10 @@ public class TravelRepository {
     public long insertCountry(Country country) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put("region", country.getRegion());
         values.put("name", country.getName());
+        values.put("city", country.getCity());
         values.put("description", country.getDescription());
-        values.put("flagResId", country.getFlagResId());
         values.put("photoUrl", country.getPhotoUrl());
         long id = db.insert(TravelDatabaseHelper.TABLE_COUNTRIES, null, values);
         db.close();
@@ -38,11 +39,12 @@ public class TravelRepository {
 
         while (cursor.moveToNext()) {
             long id = cursor.getLong(cursor.getColumnIndexOrThrow("id"));
+            String region = cursor.getString(cursor.getColumnIndexOrThrow("region"));
             String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+            String city = cursor.getString(cursor.getColumnIndexOrThrow("city"));
             String desc = cursor.getString(cursor.getColumnIndexOrThrow("description"));
-            int flag = cursor.getInt(cursor.getColumnIndexOrThrow("flagResId"));
             String photo = cursor.getString(cursor.getColumnIndexOrThrow("photoUrl"));
-            countries.add(new Country(id, name, desc, flag, photo));
+            countries.add(new Country(id, region, name, city, desc, photo));
         }
         cursor.close();
         db.close();
@@ -55,7 +57,7 @@ public class TravelRepository {
         ContentValues values = new ContentValues();
         values.put("countryId", stamp.getCountryId());
         values.put("stampedAt", stamp.getStampedAt());
-        values.put("imageResId", stamp.getImageResId());
+        values.put("imageName", stamp.getImageName());
         values.put("imageUri", stamp.getImageUri());
         values.put("imageUrl", stamp.getImageUrl());
         long id = db.insert(TravelDatabaseHelper.TABLE_STAMPS, null, values);
@@ -73,11 +75,11 @@ public class TravelRepository {
             long id = cursor.getLong(cursor.getColumnIndexOrThrow("id"));
             long countryId = cursor.getLong(cursor.getColumnIndexOrThrow("countryId"));
             long stampedAt = cursor.getLong(cursor.getColumnIndexOrThrow("stampedAt"));
-            int imageRes = cursor.getInt(cursor.getColumnIndexOrThrow("imageResId"));
+            String imageName = cursor.getString(cursor.getColumnIndexOrThrow("imageName"));
             String imageUri = cursor.getString(cursor.getColumnIndexOrThrow("imageUri"));
             String imageUrl = cursor.getString(cursor.getColumnIndexOrThrow("imageUrl"));
 
-            stamps.add(new Stamp(id, countryId, stampedAt, imageRes, imageUri, imageUrl));
+            stamps.add(new Stamp(id, countryId, stampedAt, imageName, imageUri, imageUrl));
         }
         cursor.close();
         db.close();

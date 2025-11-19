@@ -17,33 +17,30 @@ public class StampDao {
     }
 
     /** 스탬프 전체 조회 */
+
     public List<Stamp> getAllStamps() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<Stamp> list = new ArrayList<>();
 
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(
                 TravelDatabaseHelper.TABLE_STAMPS,
                 null, null, null, null, null,
                 "id ASC"
         );
 
-        if (cursor.moveToFirst()) {
-            do {
-                Stamp s = new Stamp(
-                        cursor.getLong(cursor.getColumnIndexOrThrow("id")),
-                        cursor.getLong(cursor.getColumnIndexOrThrow("countryId")),
-                        cursor.getLong(cursor.getColumnIndexOrThrow("stampedAt")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("imageResId")),
-                        cursor.getString(cursor.getColumnIndexOrThrow("imageUri")),
-                        cursor.getString(cursor.getColumnIndexOrThrow("imageUrl"))
-                );
-                list.add(s);
-            } while (cursor.moveToNext());
+        while (cursor.moveToNext()) {
+            long id = cursor.getLong(cursor.getColumnIndexOrThrow("id"));
+            long countryId = cursor.getLong(cursor.getColumnIndexOrThrow("countryId"));
+            long stampedAt = cursor.getLong(cursor.getColumnIndexOrThrow("stampedAt")); // 날짜 컬럼
+            String imageName = cursor.getString(cursor.getColumnIndexOrThrow("imageName"));
+            String imageUri = cursor.getString(cursor.getColumnIndexOrThrow("imageUri")); // 날짜 컬럼
+            String imageUrl = cursor.getString(cursor.getColumnIndexOrThrow("imageUrl")); // 날짜 컬럼
+
+            Stamp stamp = new Stamp(id, countryId, stampedAt, imageName, imageUri, imageUrl);
+            list.add(stamp);
         }
 
         cursor.close();
-        db.close();
-
         return list;
     }
 
@@ -54,7 +51,7 @@ public class StampDao {
 
         values.put("countryId", stamp.getCountryId());
         values.put("stampedAt", stamp.getStampedAt());
-        values.put("imageResId", stamp.getImageResId());
+        values.put("imageName", stamp.getImageName());
         values.put("imageUri", stamp.getImageUri());
         values.put("imageUrl", stamp.getImageUrl());
 

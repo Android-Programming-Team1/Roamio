@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class TravelDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "travel_stamp.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public static final String TABLE_COUNTRIES = "countries";
     public static final String TABLE_STAMPS = "stamps";
@@ -31,7 +31,7 @@ public class TravelDatabaseHelper extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "countryId INTEGER NOT NULL," +
                 "stampedAt INTEGER," +
-                "imageResId INTEGER," +
+                "imageName TEXT," +
                 "imageUri TEXT," +
                 "imageUrl TEXT," +
                 "FOREIGN KEY(countryId) REFERENCES countries(id) ON DELETE CASCADE" +

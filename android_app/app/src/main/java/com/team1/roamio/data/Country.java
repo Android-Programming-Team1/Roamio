@@ -8,7 +8,7 @@ public class Country {
     private String description; // 설명
     private String photoUrl;    // 국가 사진
 
-    public Country(long id, String name, String description, Integer flagResId, String photoUrl) {
+    public Country(long id, String region, String name, String city, String description, String photoUrl) {
         this.id = id;
         this.region = region;
         this.name = name;
