@@ -3,12 +3,20 @@ package com.team1.roamio.view.ui.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.team1.roamio.R;
+import com.team1.roamio.view.ui.list_view_adapter.PlanDataListViewAdapter;
+import com.team1.roamio.view.ui.list_view_item.PlanDataListViewItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +33,12 @@ public class MyPageFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
+    private RecyclerView recyclerView;
+    private PlanDataListViewAdapter adapter;
+    private List<PlanDataListViewItem> itemList;
+
 
     public MyPageFragment() {
         // Required empty public constructor
@@ -60,7 +74,28 @@ public class MyPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_page, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_my_page, container, false);
+
+        recyclerView = view.findViewById(R.id.planDataSaveList);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setHasFixedSize(true);
+
+        // 샘플 데이터
+        itemList = new ArrayList<>();
+        for (int i = 1; i <= 30; i++) {
+            itemList.add(new PlanDataListViewItem("아이템 " + i, "서브타이틀 " + i));
+        }
+
+        adapter = new PlanDataListViewAdapter(view.getContext(), itemList);
+        recyclerView.setAdapter(adapter);
+
+        // 구분선 추가(Optional)
+        recyclerView.addItemDecoration(
+                new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL)
+        );
+
+        return view;
     }
 }
