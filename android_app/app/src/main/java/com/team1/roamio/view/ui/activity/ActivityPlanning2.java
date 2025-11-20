@@ -39,7 +39,7 @@ public class ActivityPlanning2 extends AppCompatActivity {
         lazyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SavedUserData.style = "여유로운 일정을 선호함";
+                SavedUserData.style = false;
                 Intent intent = new Intent(ActivityPlanning2.this, ActivityPlanning3.class);
                 startActivity(intent);
             }
@@ -48,7 +48,7 @@ public class ActivityPlanning2 extends AppCompatActivity {
         lazyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SavedUserData.style = "긴밀하게 짜인 일정을 선호함";
+                SavedUserData.style = true;
                 Intent intent = new Intent(ActivityPlanning2.this, ActivityPlanning3.class);
                 startActivity(intent);
             }

@@ -23,7 +23,7 @@ public class TravelRepository {
         ContentValues values = new ContentValues();
         values.put("name", country.getName());
         values.put("description", country.getDescription());
-        values.put("flagResId", country.getFlagResId());
+//        values.put("flagResId", country.getFlagResId());
         values.put("photoUrl", country.getPhotoUrl());
         long id = db.insert(TravelDatabaseHelper.TABLE_COUNTRIES, null, values);
         db.close();

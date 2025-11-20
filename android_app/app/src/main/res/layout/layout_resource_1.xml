@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <TextView
-        android:id="@+id/tvTitle"
+
+    <ImageView
+        android:id="@+id/imageView11"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Title"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="100dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bg_place_item" />
 
     <TextView
-        android:id="@+id/tvSubtitle"
-        android:layout_width="0dp"
+        android:id="@+id/tv_place"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Subtitle"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@id/tvTitle"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="4dp"/>
+        android:layout_marginStart="8dp"
+        android:text="인천공항ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+        app:layout_constraintStart_toEndOf="@+id/imageView12"
+        app:layout_constraintTop_toTopOf="@+id/imageView12" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+        app:layout_constraintStart_toStartOf="@+id/imageView11"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/img_dot" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
