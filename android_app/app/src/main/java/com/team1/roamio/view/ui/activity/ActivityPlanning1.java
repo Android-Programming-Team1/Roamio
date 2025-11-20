@@ -57,7 +57,7 @@ public class ActivityPlanning1 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        threefourDay = findViewById(R.id.btn1);
+        threefourDay = findViewById(R.id.btn3);
         threefourDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +66,7 @@ public class ActivityPlanning1 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        fourfiveDay = findViewById(R.id.btn1);
+        fourfiveDay = findViewById(R.id.btn4);
         fourfiveDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +75,7 @@ public class ActivityPlanning1 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        fivesixDay = findViewById(R.id.btn1);
+        fivesixDay = findViewById(R.id.btn5);
         fivesixDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +84,7 @@ public class ActivityPlanning1 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        sixsevenDay = findViewById(R.id.btn1);
+        sixsevenDay = findViewById(R.id.btn6);
         sixsevenDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,4 +96,18 @@ public class ActivityPlanning1 extends AppCompatActivity {
 
     }
 
+    public static class PlanSettingActivity extends AppCompatActivity {
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            EdgeToEdge.enable(this);
+            setContentView(R.layout.activity_plan_setting);
+            ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+                return insets;
+            });
+        }
+    }
 }

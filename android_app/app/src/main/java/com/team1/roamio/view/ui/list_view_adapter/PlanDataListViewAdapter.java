@@ -1,6 +1,7 @@
 package com.team1.roamio.view.ui.list_view_adapter;
 
 import android.content.Context;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.team1.roamio.R;
+import com.team1.roamio.data.TravelPlanData;
 import com.team1.roamio.view.ui.list_view_item.PlanDataListViewItem;
 
 import java.util.List;
@@ -18,9 +20,19 @@ import java.util.List;
 public class PlanDataListViewAdapter extends RecyclerView.Adapter<PlanDataListViewAdapter.ViewHolder> {
 
     private Context context;
-    private List<PlanDataListViewItem> items;
+    private List<Pair<PlanDataListViewItem, TravelPlanData>> items;
 
-    public PlanDataListViewAdapter(Context context, List<PlanDataListViewItem> items) {
+    public interface OnItemClickListener {
+        void onItemClick(int position, Pair<PlanDataListViewItem, TravelPlanData> item);
+    }
+
+    private PlanDataListViewAdapter.OnItemClickListener listener;
+
+    public void setOnItemClickListener(PlanDataListViewAdapter.OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public PlanDataListViewAdapter(Context context, List<Pair<PlanDataListViewItem, TravelPlanData>> items) {
         this.context = context;
         this.items = items;
     }
@@ -50,12 +62,14 @@ public class PlanDataListViewAdapter extends RecyclerView.Adapter<PlanDataListVi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        PlanDataListViewItem item = items.get(position);
-        holder.bind(item);
+        Pair<PlanDataListViewItem, TravelPlanData> item = items.get(position);
+        holder.bind(item.first);
 
-        holder.itemView.setOnClickListener(v ->
-                Toast.makeText(context, "클릭: " + item.getTitle(), Toast.LENGTH_SHORT).show()
-        );
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(position, item);
+            }
+        });
     }
 
     @Override

@@ -110,7 +110,7 @@
             android:layout_width="0dp"
             android:layout_height="54dp"
             android:backgroundTint="@color/white"
-            android:text="문화·예술"
+            android:text="휴식·힐링"
             android:textColor="@color/black"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="24dp"

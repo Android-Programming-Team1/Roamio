@@ -107,7 +107,7 @@ public class TravelPlanBuilder {
                 "     - \"activities\": 하루 일정 배열 (보통 3~4개)\n" +
                 "       각 활동은 다음을 포함:\n" +
                 "         - \"time\": 오전 / 오후 / 저녁 / 밤\n" +
-                "         - \"title\": 짧은 제목\n" +
+                "         - \"title\": 짧은 제목 (최대 30자)\n" +
                 "         - \"description\": 활동 설명 (한국어)\n" +
                 "         - \"location\": 장소명 또는 지역명\n" +
                 "         - \"transport\": {\n" +
