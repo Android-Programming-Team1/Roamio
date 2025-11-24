@@ -18,8 +18,11 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.team1.roamio.R;
 import com.team1.roamio.data.TravelPlanData;
+import com.team1.roamio.utility.database.DriveManager;
 import com.team1.roamio.utility.planner.PlanBuildCallback;
 import com.team1.roamio.utility.planner.SavedUserData;
 import com.team1.roamio.utility.planner.TravelPlanBuilder;
@@ -67,6 +70,11 @@ public class ActivityPlanningResult extends AppCompatActivity {
                     editor.putString("plan_title" + idx, SavedUserData.planData.getPlanSummary());
                     editor.putInt("idx", idx + 1);
                     editor.commit();
+
+                    DriveManager driveManager = new DriveManager(ActivityPlanningResult.this);
+                    driveManager.initialize(GoogleSignIn.getLastSignedInAccount(ActivityPlanningResult.this));
+
+                    driveManager.saveFile(SavedUserData.planData.getPlanSummary(), TravelPlanParser.parsePlanDataToJson(SavedUserData.planData).toString(), ".json");
 
                     Toast.makeText(ActivityPlanningResult.this, "저장되었습니다.", Toast.LENGTH_SHORT).show();
                 }
