@@ -103,4 +103,19 @@ dependencies {
 
     // item view
     implementation("androidx.recyclerview:recyclerview:1.3.0")
+
+
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+// 최신 버전 확인
+// Google Drive REST API (Google API Client Library for Java)
+    implementation("com.google.api-client:google-api-client-android:1.35.1")
+// 최신 버전 확인
+    implementation("com.google.oauth-client:google-oauth-client-jetty:1.34.1")
+// 데스크톱용이 아닌 경우, 안드로이드용 HTTP 전송 사용
+    implementation("com.google.apis:google-api-services-drive:v3-rev20220815-2.0.0")
+// v3 버전
+    implementation("com.google.code.gson:gson:2.10.1")
+// JSON 파싱용
+    implementation("com.google.http-client:google-http-client-gson:1.43.0")
+    implementation("com.google.http-client:google-http-client-android:1.43.0")
 }
