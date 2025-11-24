@@ -1,33 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="24dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
 
-    <!-- Country ID 입력 -->
-    <EditText
-        android:id="@+id/edit_country_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Country ID 입력"
-        android:inputType="number" />
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-    <!-- Image Res ID 입력 -->
-    <EditText
-        android:id="@+id/edit_image_res_id"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Image Resource ID 입력"
-        android:inputType="number" />
-
-    <!-- 저장 버튼 -->
-    <Button
-        android:id="@+id/btn_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="저장" />
+        android:text="현재 위치를 확인하여 스탬프를 찍는 중입니다..."
+        android:textSize="16sp"
+        android:textColor="#000000"/>
 
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.util.Log;
 
 public class StampDao {
 
@@ -17,33 +18,35 @@ public class StampDao {
     }
 
     /** 스탬프 전체 조회 */
+
     public List<Stamp> getAllStamps() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<Stamp> list = new ArrayList<>();
 
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(
                 TravelDatabaseHelper.TABLE_STAMPS,
                 null, null, null, null, null,
                 "id ASC"
         );
 
-        if (cursor.moveToFirst()) {
-            do {
-                Stamp s = new Stamp(
-                        cursor.getLong(cursor.getColumnIndexOrThrow("id")),
-                        cursor.getLong(cursor.getColumnIndexOrThrow("countryId")),
-                        cursor.getLong(cursor.getColumnIndexOrThrow("stampedAt")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("imageResId")),
-                        cursor.getString(cursor.getColumnIndexOrThrow("imageUri")),
-                        cursor.getString(cursor.getColumnIndexOrThrow("imageUrl"))
-                );
-                list.add(s);
-            } while (cursor.moveToNext());
+        // [디버깅 로그] 가져온 개수 확인
+        Log.d("StampDao", "조회된 스탬프 개수: " + cursor.getCount());
+
+        while (cursor.moveToNext()) {
+            long id = cursor.getLong(cursor.getColumnIndexOrThrow("id"));
+            long countryId = cursor.getLong(cursor.getColumnIndexOrThrow("countryId"));
+            long stampedAt = cursor.getLong(cursor.getColumnIndexOrThrow("stampedAt")); // 날짜 컬럼
+            String imageName = cursor.getString(cursor.getColumnIndexOrThrow("imageName"));
+            String imageUri = cursor.getString(cursor.getColumnIndexOrThrow("imageUri")); // 날짜 컬럼
+            String imageUrl = cursor.getString(cursor.getColumnIndexOrThrow("imageUrl")); // 날짜 컬럼
+
+            Stamp stamp = new Stamp(id, countryId, stampedAt, imageName, imageUri, imageUrl);
+            list.add(stamp);
+
+            Log.d("StampDao", "스탬프 로드됨: ID=" + id + ", CountryID=" + countryId);
         }
 
         cursor.close();
-        db.close();
-
         return list;
     }
 
@@ -54,7 +57,7 @@ public class StampDao {
 
         values.put("countryId", stamp.getCountryId());
         values.put("stampedAt", stamp.getStampedAt());
-        values.put("imageResId", stamp.getImageResId());
+        values.put("imageName", stamp.getImageName());
         values.put("imageUri", stamp.getImageUri());
         values.put("imageUrl", stamp.getImageUrl());
 
