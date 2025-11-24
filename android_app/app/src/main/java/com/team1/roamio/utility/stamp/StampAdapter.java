@@ -1,11 +1,16 @@
 package com.team1.roamio.utility.stamp;
 
 import android.content.Context;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.content.res.Resources;
+
+import androidx.core.content.ContextCompat;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,15 +55,10 @@ public class StampAdapter extends RecyclerView.Adapter<StampAdapter.StampViewHol
         holder.txtName.setText(stamp.getImageName());
 
         // Drawable 리소스 ID 찾기
-        int resId = context.getResources().getIdentifier(
-                stamp.getImageName(),
-                "drawable",
-                context.getPackageName()
-        );
-
-        if (resId != 0) {
-            holder.stampImage.setImageResource(resId);
-        } else {
+        try {
+            Drawable drawable = getResource(stamp.getImageName(), context);
+            holder.stampImage.setImageDrawable(drawable);
+        } catch (NameNotFoundException e) {
             holder.stampImage.setImageResource(R.drawable.stamp_00);
         }
 
@@ -88,6 +88,23 @@ public class StampAdapter extends RecyclerView.Adapter<StampAdapter.StampViewHol
             super(itemView);
             stampImage = itemView.findViewById(R.id.stamp_image);
             txtName = itemView.findViewById(R.id.text_country);
+        }
+    }
+
+    private static Drawable getResource(String resName, Context context)
+            throws NameNotFoundException {
+
+        Context resContext = context.createPackageContext(context.getPackageName(), 0);
+        Resources res = resContext.getResources();
+
+        // "48" suffix 붙이기
+        int id = res.getIdentifier(resName + "48", "drawable", context.getPackageName());
+
+        if (id == 0) {
+            // 기본 이미지 (존재하는 이미지 이름으로 변경 가능)
+            return ContextCompat.getDrawable(context, R.drawable.stamp_00);
+        } else {
+            return ContextCompat.getDrawable(context, id);
         }
     }
 }
