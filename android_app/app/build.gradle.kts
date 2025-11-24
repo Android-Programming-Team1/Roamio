@@ -77,6 +77,9 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.firebase.firestore)
+    implementation(libs.identity.jvm)
+    implementation(libs.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -87,8 +90,17 @@ dependencies {
     // JSON 파싱을 위한 Gson
     implementation("com.google.code.gson:gson:2.10.1")
 
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
     implementation("com.google.android.material:material:1.10.0")
 
     // lottie
     implementation("com.airbnb.android:lottie:6.0.0")
+
+    //JSoup
+    implementation("org.jsoup:jsoup:1.17.2")
+
+    // item view
+    implementation("androidx.recyclerview:recyclerview:1.3.0")
 }

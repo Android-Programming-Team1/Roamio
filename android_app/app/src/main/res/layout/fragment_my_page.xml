@@ -5,121 +5,150 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.ui.fragment.MyPageFragment">
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="#F3FBFF">-->
+<!--        <ImageView-->
+<!--            android:id="@+id/bgCard"-->
+<!--            android:layout_width="320dp"-->
+<!--            android:layout_height="500dp"-->
+<!--            android:layout_marginTop="160dp"-->
+<!--            android:background="@null"-->
+<!--            android:contentDescription="TODO"-->
+<!--            android:src="@drawable/bg_card_rounded"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            tools:ignore="ContentDescription,HardcodedText" />-->
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView11"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="180dp"-->
+<!--            android:src="@drawable/myprofile_icon"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.498"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView19"-->
+<!--            android:layout_width="145dp"-->
+<!--            android:layout_height="141dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:background="@null"-->
+<!--            android:src="@drawable/ic_roamio"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/imageView11" />-->
+<!--        <TextView-->
+<!--            android:id="@+id/textView5"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:text="이영욱"-->
+<!--            android:textSize="18sp"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/imageView19" />-->
+<!--        <TextView-->
+<!--            android:id="@+id/textView7"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="6dp"-->
+<!--            android:text="저는 여행 계획 짜는 일을 좋아해요!"-->
+<!--            android:textSize="14sp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/textView5" />-->
+<!--        <ImageButton-->
+<!--            android:id="@+id/imageButton8"-->
+<!--            android:layout_width="320dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="36dp"-->
+<!--            android:background="@null"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:src="@drawable/profile_button"-->
+<!--            android:tint="@null"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/bgCard"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/bgCard"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/textView7" />-->
+<!--        <ImageButton-->
+<!--            android:id="@+id/imageButton9"-->
+<!--            android:layout_width="320dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:background="@null"-->
+<!--            android:contentDescription="TODO"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:src="@drawable/saved_button"-->
+<!--            android:tint="@null"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/bgCard"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/bgCard"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/imageButton8" />-->
+<!--        <ImageButton-->
+<!--            android:id="@+id/imageButton10"-->
+<!--            android:layout_width="320dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:background="@null"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:src="@drawable/help_button"-->
+<!--            android:tint="@null"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/bgCard"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/bgCard"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/imageButton9"-->
+<!--            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />-->
+<!--        <ImageButton-->
+<!--            android:id="@+id/imageButton7"-->
+<!--            android:layout_width="320dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="4dp"-->
+<!--            android:background="@null"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:src="@drawable/setting_button"-->
+<!--            android:tint="@null"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/bgCard"-->
+<!--            app:layout_constraintHorizontal_bias="0.495"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/bgCard"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/imageButton10" />-->
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView12"-->
+<!--            android:layout_width="34dp"-->
+<!--            android:layout_height="42dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:src="@drawable/saved_icon"-->
+<!--            app:layout_constraintStart_toStartOf="@id/imageButton8"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/imageButton8" />-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#F3FBFF">
+        android:layout_height="match_parent">
+
         <ImageView
-            android:id="@+id/bgCard"
-            android:layout_width="320dp"
-            android:layout_height="500dp"
-            android:layout_marginTop="160dp"
-            android:background="@null"
-            android:contentDescription="TODO"
-            android:src="@drawable/bg_card_rounded"
+            android:id="@+id/imageView4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/bg_home_fragment"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription,HardcodedText" />
-        <ImageView
-            android:id="@+id/imageView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="180dp"
-            android:src="@drawable/myprofile_icon"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-        <ImageView
-            android:id="@+id/imageView19"
-            android:layout_width="145dp"
-            android:layout_height="141dp"
-            android:layout_marginTop="20dp"
-            android:background="@null"
-            android:src="@drawable/ic_roamio"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/planDataSaveList"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView11" />
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="이영욱"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView19" />
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="저는 여행 계획 짜는 일을 좋아해요!"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView5" />
-        <ImageButton
-            android:id="@+id/imageButton8"
-            android:layout_width="320dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="36dp"
-            android:background="@null"
-            android:scaleType="fitCenter"
-            android:src="@drawable/profile_button"
-            android:tint="@null"
-            app:layout_constraintEnd_toEndOf="@+id/bgCard"
-            app:layout_constraintStart_toStartOf="@+id/bgCard"
-            app:layout_constraintTop_toBottomOf="@id/textView7" />
-        <ImageButton
-            android:id="@+id/imageButton9"
-            android:layout_width="320dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:background="@null"
-            android:contentDescription="TODO"
-            android:scaleType="fitCenter"
-            android:src="@drawable/saved_button"
-            android:tint="@null"
-            app:layout_constraintEnd_toEndOf="@+id/bgCard"
-            app:layout_constraintStart_toStartOf="@+id/bgCard"
-            app:layout_constraintTop_toBottomOf="@id/imageButton8" />
-        <ImageButton
-            android:id="@+id/imageButton10"
-            android:layout_width="320dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:background="@null"
-            android:scaleType="fitCenter"
-            android:src="@drawable/help_button"
-            android:tint="@null"
-            app:layout_constraintEnd_toEndOf="@+id/bgCard"
-            app:layout_constraintStart_toStartOf="@+id/bgCard"
-            app:layout_constraintTop_toBottomOf="@id/imageButton9"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-        <ImageButton
-            android:id="@+id/imageButton7"
-            android:layout_width="320dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="4dp"
-            android:background="@null"
-            android:scaleType="fitCenter"
-            android:src="@drawable/setting_button"
-            android:tint="@null"
-            app:layout_constraintEnd_toEndOf="@+id/bgCard"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="@+id/bgCard"
-            app:layout_constraintTop_toBottomOf="@id/imageButton10" />
-        <ImageView
-            android:id="@+id/imageView12"
-            android:layout_width="34dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/saved_icon"
-            app:layout_constraintStart_toStartOf="@id/imageButton8"
-            app:layout_constraintTop_toBottomOf="@id/imageButton8" />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
