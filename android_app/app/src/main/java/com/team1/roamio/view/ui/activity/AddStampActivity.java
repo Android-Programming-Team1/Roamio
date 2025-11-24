@@ -8,8 +8,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,11 +27,6 @@ import java.util.Locale;
 
 public class AddStampActivity extends AppCompatActivity {
 
-    private static final int PERMISSION_REQUEST_CODE = 100;
-
-    private EditText editImageName;
-    private Button btnSave;
-
     private LocationManager locationManager;
     private LocationListener locationListener;
 
@@ -40,123 +35,104 @@ public class AddStampActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stamp);
 
-        editImageName = findViewById(R.id.edit_image_name);
-        btnSave = findViewById(R.id.btn_save);
+        // 액티비티 시작과 동시에 권한 체크 및 GPS 시작
+        checkPermissionAndStartGPS();
+    }
 
+    private void checkPermissionAndStartGPS() {
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        // 위치 변화 감지 리스너
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+        } else {
+            requestLocation();
+        }
+    }
+
+    private void requestLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) return;
+
+        // 위치 리스너 정의
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
-
-                double lat = location.getLatitude();
-                double lon = location.getLongitude();
-
-                String isoCode = getCountryCode(lat, lon);
-
-                if (isoCode == null) {
-                    Toast.makeText(AddStampActivity.this, "국가 정보를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                CountryDao countryDao = new CountryDao(AddStampActivity.this);
-                Long countryId = countryDao.getCountryIdByIsoCode(isoCode);
-
-                if (countryId == null) {
-                    Toast.makeText(AddStampActivity.this, "DB에서 국가를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                saveStampToDB(countryId);
-
-                // 위치 한 번만 저장하면 되므로 업데이트 중단
-                if (ActivityCompat.checkSelfPermission(
-                        AddStampActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED) {
-                    locationManager.removeUpdates(locationListener);
-                }
+                // 위치 찾음 -> 처리 -> 리스너 해제 -> 종료
+                processLocation(location);
+                locationManager.removeUpdates(this);
             }
         };
 
-        btnSave.setOnClickListener(v -> checkPermission());
+        // GPS 및 네트워크 위치 요청
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
+        // (옵션) 10초 동안 못 찾으면 타임아웃 처리
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            if (!isFinishing()) {
+                Toast.makeText(this, "위치를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }, 10000);
     }
 
-    /** 위치 권한 확인 */
-    private void checkPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
+    private void processLocation(Location location) {
+        String isoCode = getIsoCode(location.getLatitude(), location.getLongitude());
 
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                    PERMISSION_REQUEST_CODE
-            );
-        } else {
-            requestGPS();
-        }
-    }
-
-    /** GPS 요청 */
-    private void requestGPS() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            Toast.makeText(this, "GPS 권한이 없습니다.", Toast.LENGTH_SHORT).show();
+        if (isoCode == null) {
+            Toast.makeText(this, "국가 정보를 읽지 못했습니다.", Toast.LENGTH_SHORT).show();
+            finish();
             return;
         }
 
-        Toast.makeText(this, "GPS 위치를 가져오는 중...", Toast.LENGTH_SHORT).show();
+        // DB에서 해당 국가 ID 조회 (이전 답변의 CountryDao 메서드 활용)
+        CountryDao countryDao = new CountryDao(this);
+        Long countryId = countryDao.getCountryIdByIsoCode(isoCode);
 
-        // 3초, 10m 기준으로 업데이트 요청
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                3000, 10,
-                locationListener
-        );
+        if (countryId == null) {
+            Toast.makeText(this, "서비스되지 않는 지역입니다: " + isoCode, Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        // 스탬프 DB 저장
+        Stamp stamp = new Stamp();
+        stamp.setCountryId(countryId);
+        stamp.setStampedAt(System.currentTimeMillis());
+        // 이미지 이름 자동 매칭 (예: stamp_kr, stamp_jp)
+        String imgName = "stamp_" + isoCode.toLowerCase();
+        // 이미지가 리소스에 없으면 기본값
+        int resId = getResources().getIdentifier(imgName, "drawable", getPackageName());
+        stamp.setImageName(resId != 0 ? imgName : "stamp_00");
+
+        new StampDao(this).insertStamp(stamp);
+
+        // 성공 메시지와 함께 종료 -> Fragment로 돌아감
+        Toast.makeText(this, "스탬프 획득 완료!", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
-    /** 나라 코드 획득 */
-    private String getCountryCode(double lat, double lon) {
+    private String getIsoCode(double lat, double lon) {
         try {
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            Geocoder geocoder = new Geocoder(this, Locale.US);
             List<Address> list = geocoder.getFromLocation(lat, lon, 1);
             if (list != null && !list.isEmpty()) {
-                return list.get(0).getCountryCode(); // 예: KR, JP, US
+                return list.get(0).getCountryCode();
             }
         } catch (Exception e) { e.printStackTrace(); }
         return null;
     }
 
-    /** 스탬프 DB 저장 */
-    private void saveStampToDB(long countryId) {
-        String imageName = editImageName.getText().toString().trim();
-        if (imageName.isEmpty()) imageName = "stamp_00"; // 기본 이미지
-
-        Stamp stamp = new Stamp();
-        stamp.setCountryId(countryId);
-        stamp.setImageName(imageName);
-        stamp.setStampedAt(System.currentTimeMillis());
-
-        long newId = new StampDao(this).insertStamp(stamp);
-
-        Toast.makeText(this, "GPS 기반 스탬프 추가 완료! ID: " + newId, Toast.LENGTH_SHORT).show();
-        finish();
-    }
-
-
-    /** 권한 결과 콜백 */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                requestGPS();
-            } else {
-                Toast.makeText(this, "위치 권한이 필요합니다.", Toast.LENGTH_SHORT).show();
-            }
+        if (requestCode == 100 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            requestLocation();
+        } else {
+            Toast.makeText(this, "위치 권한이 필요합니다.", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 }
