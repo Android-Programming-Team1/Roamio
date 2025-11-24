@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.util.Log;
 
 public class StampDao {
 
@@ -28,6 +29,9 @@ public class StampDao {
                 "id ASC"
         );
 
+        // [디버깅 로그] 가져온 개수 확인
+        Log.d("StampDao", "조회된 스탬프 개수: " + cursor.getCount());
+
         while (cursor.moveToNext()) {
             long id = cursor.getLong(cursor.getColumnIndexOrThrow("id"));
             long countryId = cursor.getLong(cursor.getColumnIndexOrThrow("countryId"));
@@ -38,6 +42,8 @@ public class StampDao {
 
             Stamp stamp = new Stamp(id, countryId, stampedAt, imageName, imageUri, imageUrl);
             list.add(stamp);
+
+            Log.d("StampDao", "스탬프 로드됨: ID=" + id + ", CountryID=" + countryId);
         }
 
         cursor.close();

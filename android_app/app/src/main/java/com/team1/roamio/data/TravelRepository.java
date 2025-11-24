@@ -26,6 +26,7 @@ public class TravelRepository {
         values.put("city", country.getCity());
         values.put("description", country.getDescription());
         values.put("photoUrl", country.getPhotoUrl());
+        values.put("stampName", country.getStampName());
         long id = db.insert(TravelDatabaseHelper.TABLE_COUNTRIES, null, values);
         db.close();
         return id;
@@ -44,7 +45,8 @@ public class TravelRepository {
             String city = cursor.getString(cursor.getColumnIndexOrThrow("city"));
             String desc = cursor.getString(cursor.getColumnIndexOrThrow("description"));
             String photo = cursor.getString(cursor.getColumnIndexOrThrow("photoUrl"));
-            countries.add(new Country(id, region, name, city, desc, photo));
+            String stamp = cursor.getString(cursor.getColumnIndexOrThrow("stampName"));
+            countries.add(new Country(id, region, name, city, desc, photo, stamp));
         }
         cursor.close();
         db.close();

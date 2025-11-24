@@ -7,14 +7,16 @@ public class Country {
     private String city;        // 도시
     private String description; // 설명
     private String photoUrl;    // 국가 사진
+    private String stampName;   // 국가별 stamp image
 
-    public Country(long id, String region, String name, String city, String description, String photoUrl) {
+    public Country(long id, String region, String name, String city, String description, String photoUrl, String stampName) {
         this.id = id;
         this.region = region;
         this.name = name;
         this.city = city;
         this.description = description;
         this.photoUrl = photoUrl;
+        this.stampName = stampName;
     }
 
     public long getId() { return id; }
@@ -35,4 +37,8 @@ public class Country {
 
     public String getPhotoUrl() { return photoUrl; }
     public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
+
+    public String getStampName() {return stampName;}
+
+    public void setStampName(String stampName) {this.stampName = stampName;}
 }
