@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Roamio">
         <activity
+            android:name=".view.ui.activity.AddStampActivity"
+            android:exported="false"/>
+        <activity
             android:name=".view.ui.PlanSettingActivity"
             android:exported="false" />
         <activity
