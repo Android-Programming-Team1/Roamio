@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.team1.roamio.R;
 import com.team1.roamio.utility.planner.SavedUserData;
 
@@ -25,6 +27,7 @@ public class ActivityPlanning5 extends AppCompatActivity {
     Button imgBtn4;
     Button imgBtn5;
     Button imgBtn6;
+    private ImageView icon;
 
     // checkTog 배열의 인덱스는 버튼 imgBtn1 ~ imgBtn6과 맵핑됩니다.
     // 0: imgBtn1, 1: imgBtn2, ..., 5: imgBtn6
@@ -40,6 +43,10 @@ public class ActivityPlanning5 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_planning_5);
+
+        icon = findViewById(R.id.imageView7);
+        Glide.with(this).asGif().load(R.drawable.romeo1).into(icon);
+
 
         // 1. 뒤로 가기 버튼 설정
         backButton = findViewById(R.id.imageButton6);

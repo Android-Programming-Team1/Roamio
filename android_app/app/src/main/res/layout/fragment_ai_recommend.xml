@@ -118,15 +118,18 @@
 
                         <TextView
                             android:id="@+id/txt_place_name1"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginEnd="40dp"
                             android:layout_marginBottom="8dp"
                             android:text="데이터 불러오는 중"
                             android:textColor="@color/white"
                             android:textSize="28sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toTopOf="@+id/imageView2"
-                            app:layout_constraintStart_toStartOf="@+id/imageView2" />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
 
                         <ImageView
                             android:id="@+id/imageView2"
@@ -189,16 +192,19 @@
 
                         <TextView
                             android:id="@+id/txt_place_name2"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginEnd="40dp"
                             android:layout_marginBottom="8dp"
                             android:text="데이터 불러오는 중"
+
                             android:textColor="@color/white"
                             android:textSize="28sp"
-
                             android:textStyle="bold"
                             app:layout_constraintBottom_toTopOf="@+id/imageView1"
-                            app:layout_constraintStart_toStartOf="@+id/imageView1" />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
 
                         <ImageView
                             android:id="@+id/imageView1"
@@ -261,15 +267,18 @@
 
                         <TextView
                             android:id="@+id/txt_place_name3"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginEnd="40dp"
                             android:layout_marginBottom="8dp"
                             android:text="데이터 불러오는 중"
                             android:textColor="@color/white"
                             android:textSize="28sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toTopOf="@+id/imageView3"
-                            app:layout_constraintStart_toStartOf="@+id/imageView3" />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/btn_place3" />
 
                         <ImageView
                             android:id="@+id/imageView3"

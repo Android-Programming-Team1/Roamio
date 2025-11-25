@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.team1.roamio.R;
 
@@ -19,6 +21,8 @@ public class PlanSettingActivity extends AppCompatActivity {
 
     ImageButton backButton;
     MaterialButton nextButton;
+
+    private ImageView icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,9 @@ public class PlanSettingActivity extends AppCompatActivity {
 
         nextButton = findViewById(R.id.btnIntroduce);
         backButton = findViewById(R.id.imageButton3);
+        icon = findViewById(R.id.imageView9);
+
+        Glide.with(this).asGif().load(R.drawable.romeo1).into(icon);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

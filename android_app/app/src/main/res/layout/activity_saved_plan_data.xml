@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.ui.activity.ActivitySavedPlanData">
+
+    <!-- 배경 이미지 (fragment_my_page.xml에서 가져옴) -->
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/bg_home_fragment"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <!-- 저장된 계획 목록을 표시할 RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/planDataSaveList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton7" />
+
+    <ImageButton
+        android:id="@+id/imageButton7"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/btn_back" />
+
+    <ImageView
+        android:id="@+id/imageView17"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:src="@drawable/ic_roamio"
+        app:layout_constraintBottom_toBottomOf="@+id/planDataSaveList"
+        app:layout_constraintEnd_toEndOf="@+id/planDataSaveList"
+        app:layout_constraintStart_toStartOf="@+id/planDataSaveList"
+        app:layout_constraintTop_toTopOf="@+id/planDataSaveList" />
+</androidx.constraintlayout.widget.ConstraintLayout>

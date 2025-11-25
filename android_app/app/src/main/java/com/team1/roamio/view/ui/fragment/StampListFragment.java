@@ -3,10 +3,12 @@ package com.team1.roamio.view.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,13 +16,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.api.services.drive.model.File;
 import com.team1.roamio.R;
 import com.team1.roamio.data.CountryDao;
 import com.team1.roamio.data.Stamp;
 import com.team1.roamio.data.StampDao;
+import com.team1.roamio.utility.database.DriveManager;
+import com.team1.roamio.utility.stamp.StampJsonParser;
 import com.team1.roamio.view.ui.activity.AddStampActivity;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -28,8 +36,8 @@ import java.util.Locale;
 public class StampListFragment extends Fragment {
 
     private LinearLayout stampListContainer;
-    private StampDao stampDao;
     private CountryDao countryDao;
+    private ImageView icon;
 
     // ★ 중요: 뷰와 변수들을 초기화하는 onCreateView가 반드시 필요합니다.
     @Nullable
@@ -40,14 +48,12 @@ public class StampListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_stamp_list, container, false);
 
+        countryDao = new CountryDao(getActivity());
+
         stampListContainer = view.findViewById(R.id.stampListContainer);
+        icon = view.findViewById(R.id.imageView21);
 
-        // DAO 초기화
-        stampDao = new StampDao(requireContext());
-        countryDao = new CountryDao(requireContext());
-
-        // 최초 로딩 (onResume에서도 호출되지만, 뷰 생성 시점에도 호출 필요)
-        loadStamps(inflater);
+        Glide.with(getActivity()).asGif().load(R.drawable.romeo3).into(icon);
 
         return view;
     }
@@ -57,6 +63,7 @@ public class StampListFragment extends Fragment {
         super.onResume();
         // 액티비티가 닫히고 돌아올 때 목록 갱신 (DB 변경사항 반영)
         if (stampListContainer != null) {
+            icon.setVisibility(View.VISIBLE);
             loadStamps(getLayoutInflater());
         }
     }
@@ -66,20 +73,39 @@ public class StampListFragment extends Fragment {
         // 1. 기존 뷰 초기화 (중복 방지)
         stampListContainer.removeAllViews();
 
+        DriveManager driveManager = new DriveManager(getActivity());
+        driveManager.initialize(GoogleSignIn.getLastSignedInAccount(getActivity()));
+
         // 2. DB에서 저장된 모든 스탬프 가져오기
-        List<Stamp> stampList = stampDao.getAllStamps();
+        driveManager.readStampFileContents(new DriveManager.DriveFileContentListCallback() {
+            @Override
+            public void onSuccess(List<Pair<String, String>> contentList) {
+                List<Stamp> stampList = new ArrayList<>();
 
-        // 3. 저장된 스탬프 개수만큼 반복하며 뷰 추가
-        for (Stamp stamp : stampList) {
-            View item = inflater.inflate(R.layout.item_stamp, stampListContainer, false);
-            applyStampData(item, stamp); // 데이터 바인딩
-            stampListContainer.addView(item); // 컨테이너에 추가
-        }
+                for(var content : contentList) {
+                    stampList.add(StampJsonParser.fromJson(content.second));
+                }
 
-        // 4. 리스트의 맨 마지막에 '추가하기' 버튼 뷰 생성 및 추가
-        View addItem = inflater.inflate(R.layout.item_stamp_add, stampListContainer, false);
-        setupAddButton(addItem); // 클릭 이벤트 연결
-        stampListContainer.addView(addItem); // 컨테이너의 가장 마지막에 추가됨
+                // 3. 저장된 스탬프 개수만큼 반복하며 뷰 추가
+                for (Stamp stamp : stampList) {
+                    View item = inflater.inflate(R.layout.item_stamp, stampListContainer, false);
+                    applyStampData(item, stamp); // 데이터 바인딩
+                    stampListContainer.addView(item); // 컨테이너에 추가
+                }
+
+                // 4. 리스트의 맨 마지막에 '추가하기' 버튼 뷰 생성 및 추가
+                View addItem = inflater.inflate(R.layout.item_stamp_add, stampListContainer, false);
+                setupAddButton(addItem); // 클릭 이벤트 연결
+                stampListContainer.addView(addItem); // 컨테이너의 가장 마지막에 추가됨
+                icon.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+        });
+
     }
 
     /** 추가하기 버튼 클릭 로직 (중복된 메서드 제거 후 하나만 남김) */

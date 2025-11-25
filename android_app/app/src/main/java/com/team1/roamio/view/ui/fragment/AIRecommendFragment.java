@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -49,6 +50,8 @@ public class AIRecommendFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ImageView icon;
 
     private final String[] PERMISSIONS = {
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -86,6 +89,9 @@ public class AIRecommendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ai_recommend, container, false);
+
+        icon = view.findViewById(R.id.imageView6);
+        Glide.with(getActivity()).asGif().load(R.drawable.romeo1).into(icon);
 
         while(!initView(view)) { Log.d("initView", "initView fail"); }
 
