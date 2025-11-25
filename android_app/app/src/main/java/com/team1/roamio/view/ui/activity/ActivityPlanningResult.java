@@ -9,6 +9,7 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -18,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.team1.roamio.R;
@@ -41,6 +43,7 @@ public class ActivityPlanningResult extends AppCompatActivity {
     ImageButton saveButton;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    private ImageView loadingIcon;
 
 
     @Override
@@ -48,6 +51,9 @@ public class ActivityPlanningResult extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_planning_result);
+
+        loadingIcon = findViewById(R.id.imageView16);
+        Glide.with(this).asGif().load(R.drawable.romeo3).into(loadingIcon);
 
         sharedPreferences = getSharedPreferences("plan", MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -63,18 +69,12 @@ public class ActivityPlanningResult extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int idx = sharedPreferences.getInt("idx", 0);
 
                 try {
-                    editor.putString("plan_json" + idx, TravelPlanParser.parsePlanDataToJson(SavedUserData.planData).toString());
-                    editor.putString("plan_title" + idx, SavedUserData.planData.getPlanSummary());
-                    editor.putInt("idx", idx + 1);
-                    editor.commit();
-
                     DriveManager driveManager = new DriveManager(ActivityPlanningResult.this);
                     driveManager.initialize(GoogleSignIn.getLastSignedInAccount(ActivityPlanningResult.this));
 
-                    driveManager.saveFile(SavedUserData.planData.getPlanSummary(), TravelPlanParser.parsePlanDataToJson(SavedUserData.planData).toString(), ".json");
+                    driveManager.savePlanJson(SavedUserData.planData.getPlanSummary(), TravelPlanParser.parsePlanDataToJson(SavedUserData.planData).toString());
 
                     Toast.makeText(ActivityPlanningResult.this, "저장되었습니다.", Toast.LENGTH_SHORT).show();
                 }
@@ -138,6 +138,7 @@ public class ActivityPlanningResult extends AppCompatActivity {
         });
 
         resultList.setAdapter(adapter);
+        loadingIcon.setVisibility(View.GONE);
     }
 
     public void getResult() {
@@ -188,6 +189,8 @@ public class ActivityPlanningResult extends AppCompatActivity {
 
 
                             resultList.setAdapter(adapter);
+
+                            loadingIcon.setVisibility(View.GONE);
                         }
 
                         @Override
@@ -200,11 +203,14 @@ public class ActivityPlanningResult extends AppCompatActivity {
 
                             PlanDataResultListViewAdapter adapter = new PlanDataResultListViewAdapter(data);
                             resultList.setAdapter(adapter);
+
+                            loadingIcon.setVisibility(View.GONE);
                         }
                     });
         }
         catch (JSONException e) {
-            throw new RuntimeException(e);
+            Log.e("error", e.getMessage());
+            Toast.makeText(ActivityPlanningResult.this, "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 }

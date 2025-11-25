@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -26,6 +28,8 @@ public class SplashActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001; // 요청 코드
     private GoogleSignInClient mGoogleSignInClient;
 
+    private ImageView icon;
+
     // TODO: 4.1 Drive 서비스 초기화를 위해 필요한 필드를 여기에 추가하세요.
     // private Drive driveService;
 
@@ -33,6 +37,10 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        icon = findViewById(R.id.roamio_icon);
+
+        Glide.with(this).asGif().load(R.drawable.romeo1).into(icon);
 
         // 1. Google Sign-In 옵션 구성 (필요한 Scope 추가)
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

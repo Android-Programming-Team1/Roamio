@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.team1.roamio.R;
 import com.team1.roamio.data.CountryDao;
 import com.team1.roamio.data.Stamp;
@@ -29,11 +31,15 @@ public class AddStampActivity extends AppCompatActivity {
 
     private LocationManager locationManager;
     private LocationListener locationListener;
+    private ImageView icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stamp);
+
+        icon = findViewById(R.id.imageView18);
+        Glide.with(this).asGif().load(R.drawable.romeo2).into(icon);
 
         // 액티비티 시작과 동시에 권한 체크 및 GPS 시작
         checkPermissionAndStartGPS();

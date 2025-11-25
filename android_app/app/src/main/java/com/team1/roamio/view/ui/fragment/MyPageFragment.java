@@ -16,12 +16,26 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.Scope;
+import com.google.api.client.json.JsonObjectParser;
+import com.google.api.services.drive.DriveScopes;
+import com.google.api.services.drive.model.File;
+import com.google.gson.JsonObject;
 import com.team1.roamio.R;
 import com.team1.roamio.data.TravelPlanData;
+import com.team1.roamio.utility.database.DriveManager;
 import com.team1.roamio.utility.planner.SavedUserData;
 import com.team1.roamio.utility.planner.TravelPlanParser;
 import com.team1.roamio.view.ui.activity.ActivityPlanningResult;
+import com.team1.roamio.view.ui.activity.SavedPlanDataActivity;
+import com.team1.roamio.view.ui.activity.SplashActivity;
 import com.team1.roamio.view.ui.list_view_adapter.PlanDataListViewAdapter;
 import com.team1.roamio.view.ui.list_view_item.PlanDataListViewItem;
 
@@ -29,6 +43,8 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import kotlin.Triple;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,12 +62,10 @@ public class MyPageFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private ImageButton savedListButton;
+    private ImageButton logoutButton;
 
-    private RecyclerView recyclerView;
-    private PlanDataListViewAdapter adapter;
-    private List<Pair<PlanDataListViewItem, TravelPlanData>> itemList;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    private ImageView icon;
 
 
     public MyPageFragment() {
@@ -91,7 +105,35 @@ public class MyPageFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_my_page, container, false);
 
-        initList(view);
+        savedListButton = view.findViewById(R.id.imageButton9);
+        logoutButton = view.findViewById(R.id.imageButton10);
+        icon = view.findViewById(R.id.imageView19);
+
+        Glide.with(getActivity()).asGif().load(R.drawable.romeo1).into(icon);
+
+        savedListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SavedPlanDataActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .requestScopes(new Scope(DriveScopes.DRIVE_FILE))
+                        .build();
+                GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+                googleSignInClient.signOut();
+
+                Intent intent = new Intent(getActivity(), SplashActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
 
         return view;
     }
@@ -99,65 +141,5 @@ public class MyPageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        View view = getView();
-
-        if (view != null) {
-            initList(view);
-        }
-    }
-
-    public void initList(View view) {
-        sharedPreferences = getActivity().getSharedPreferences("plan", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-
-        recyclerView = view.findViewById(R.id.planDataSaveList);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setHasFixedSize(true);
-
-        itemList = new ArrayList<>();
-
-        int size = sharedPreferences.getInt("idx", 0);
-
-        for (int i = 1; i < size; i++) {
-            String title = sharedPreferences.getString("plan_title" + i, "");
-            try {
-                itemList.add(new Pair<>(
-                                new PlanDataListViewItem(title, ""),
-                                TravelPlanParser.parseJsonToPlanData(sharedPreferences.getString("plan_json" + i, ""))
-                        )
-                );
-            }
-            catch (JSONException e) {
-                Log.e("error", e.getMessage());
-            }
-        }
-
-        if (itemList.size() == 0) {
-            itemList.add(new Pair<>(
-                    new PlanDataListViewItem("저장된 계획이 없습니다.", ""),
-                    null
-            ));
-        }
-
-        adapter = new PlanDataListViewAdapter(view.getContext(), itemList);
-
-        if(!itemList.get(0).first.equals("저장된 계획이 없습니다.")) {
-            adapter.setOnItemClickListener((position, item) -> {
-
-                SavedUserData.isShowSavedData = true;
-                SavedUserData.planData = item.second;
-
-                Intent intent = new Intent(getActivity(), ActivityPlanningResult.class);
-                startActivity(intent);
-            });
-        }
-
-        recyclerView.setAdapter(adapter);
-
-        recyclerView.addItemDecoration(
-                new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL)
-        );
     }
 }
