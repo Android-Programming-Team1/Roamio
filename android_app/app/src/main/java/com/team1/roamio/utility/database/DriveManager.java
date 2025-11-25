@@ -161,8 +161,10 @@ public class DriveManager {
      * @param content 파일 내용.
      * @param fileType 저장할 파일의 유형 설명 (토스트 메시지용).
      */
-    private void saveJsonFile(String subPath, String fullFileName, String content, String fileType) {
-        if (!isInitialized()) {
+    private void saveJsonFile(String subPath, String fullFileName, String content, String fileType)
+    {
+        if (!isInitialized())
+        {
             Log.e(TAG, "Drive service is not initialized.");
             handler.post(() -> Toast.makeText(context, "Drive 서비스가 초기화되지 않았습니다. 로그인을 확인하세요.", Toast.LENGTH_LONG).show());
             return;
@@ -172,10 +174,11 @@ public class DriveManager {
 
         executor.execute(() -> {
             java.io.File tempFile = null;
-            try {
+            try
+            {
                 // 1. 임시 로컬 파일 생성
                 tempFile = java.io.File.createTempFile("roamio_temp", ".json");
-                try (FileWriter writer = new FileWriter(tempFile)) {
+                try (FileWriter writer = new FileWriter(tempFile)) { // try-with-resources는 일반적으로 한 줄에 유지
                     writer.write(content);
                 }
 
@@ -188,10 +191,13 @@ public class DriveManager {
                 fileMetadata.setMimeType("application/json");
 
                 // 4. 파일이 저장될 부모 폴더를 설정합니다.
-                if (folderId != null) {
+                if (folderId != null)
+                {
                     fileMetadata.setParents(Collections.singletonList(folderId));
                     Log.d(TAG, "Setting parent folder ID: " + folderId + " for path: " + fullPath);
-                } else {
+                }
+                else
+                {
                     Log.e(TAG, "Could not find or create folder path. Saving to root.");
                 }
 
@@ -203,20 +209,26 @@ public class DriveManager {
 
                 // 6. UI 스레드에서 결과 처리
                 handler.post(() -> {
-                    if (driveFile != null) {
+                    if (driveFile != null)
+                    {
                         Log.d(TAG, fileType + " created successfully. ID: " + driveFile.getId());
-                        Toast.makeText(context, "구글 드라이브의 " + fullPath + "에 " + fileType + "을 저장했어요", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(context, fileType + " 생성 실패", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
                     }
                 });
 
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 Log.e(TAG, "Error creating " + fileType + " in Drive", e);
                 handler.post(() -> Toast.makeText(context, fileType + " 생성 중 오류 발생했어요. 나중에 다시 시도해주세요.", Toast.LENGTH_LONG).show());
-            } finally {
+            }
+            finally
+            {
                 // 임시 로컬 파일 정리
-                if (tempFile != null) {
+                if (tempFile != null)
+                {
                     tempFile.delete();
                 }
             }
@@ -232,8 +244,10 @@ public class DriveManager {
      * @param subPath 'Roamio/' 다음의 폴더 경로 (예: "meta/plan").
      * @param callback 조회 결과를 비동기적으로 처리할 콜백.
      */
-    private void readFilesByPath(String subPath, DriveFileCallback callback) {
-        if (!isInitialized()) {
+    private void readFilesByPath(String subPath, DriveFileCallback callback)
+    {
+        if (!isInitialized())
+        {
             Log.e(TAG, "Drive service is not initialized.");
             handler.post(() -> callback.onFailure(new IllegalStateException("Drive service is not initialized.")));
             return;
@@ -242,11 +256,13 @@ public class DriveManager {
         final String fullPath = BASE_FOLDER + "/" + subPath;
 
         executor.execute(() -> {
-            try {
+            try
+            {
                 // 1. 폴더 ID 가져오기 (없으면 null 반환)
                 String folderId = getFolderIdByPath(fullPath);
 
-                if (folderId == null) {
+                if (folderId == null)
+                {
                     Log.w(TAG, "Folder path not found: " + fullPath + ". Returning empty list.");
                     // 폴더가 없으면 에러가 아닌 빈 목록을 반환하는 것이 사용자 경험상 좋습니다.
                     handler.post(() -> callback.onSuccess(Collections.emptyList()));
@@ -269,7 +285,8 @@ public class DriveManager {
                             .setPageToken(pageToken)
                             .execute();
 
-                    if (result.getFiles() != null) {
+                    if (result.getFiles() != null)
+                    {
                         resultFiles.addAll(result.getFiles());
                     }
                     pageToken = result.getNextPageToken();
@@ -279,7 +296,9 @@ public class DriveManager {
                 Log.d(TAG, "Found " + resultFiles.size() + " files in folder: " + fullPath);
                 handler.post(() -> callback.onSuccess(resultFiles));
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Log.e(TAG, "Error reading files from path: " + fullPath, e);
                 // 5. UI 스레드에서 오류 반환
                 handler.post(() -> callback.onFailure(e));
@@ -309,15 +328,18 @@ public class DriveManager {
      * @param fileId 읽어올 파일의 고유 ID.
      * @param callback 파일 내용을 비동기적으로 처리할 콜백.
      */
-    public void readFileContent(String fileId, DriveFileContentCallback callback) {
-        if (!isInitialized()) {
+    public void readFileContent(String fileId, DriveFileContentCallback callback)
+    {
+        if (!isInitialized())
+        {
             Log.e(TAG, "Drive service is not initialized.");
             handler.post(() -> callback.onFailure(new IllegalStateException("Drive service is not initialized.")));
             return;
         }
 
         executor.execute(() -> {
-            try {
+            try
+            {
                 // 1. 파일 내용을 다운로드하기 위한 InputStream 가져오기
                 InputStream inputStream = driveService.files().get(fileId).executeMediaAsInputStream();
 
@@ -325,7 +347,8 @@ public class DriveManager {
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 byte[] buffer = new byte[1024];
                 int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                while ((bytesRead = inputStream.read(buffer)) != -1)
+                {
                     outputStream.write(buffer, 0, bytesRead);
                 }
 
@@ -336,7 +359,9 @@ public class DriveManager {
                 Log.d(TAG, "Successfully read content for file ID: " + fileId);
                 handler.post(() -> callback.onSuccess(content));
 
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 Log.e(TAG, "Error reading file content for ID: " + fileId, e);
                 // 5. UI 스레드에서 오류 반환
                 handler.post(() -> callback.onFailure(e));
@@ -366,8 +391,10 @@ public class DriveManager {
      * @param subPath 'Roamio/' 다음의 폴더 경로 (예: "meta/plan").
      * @param callback 조회 결과를 비동기적으로 처리할 콜백.
      */
-    private void readAllFileContentsInPath(String subPath, DriveFileContentListCallback callback) {
-        if (!isInitialized()) {
+    private void readAllFileContentsInPath(String subPath, DriveFileContentListCallback callback)
+    {
+        if (!isInitialized())
+        {
             Log.e(TAG, "Drive service is not initialized.");
             handler.post(() -> callback.onFailure(new IllegalStateException("Drive service is not initialized.")));
             return;
@@ -380,11 +407,13 @@ public class DriveManager {
             List<Pair<String, String>> contentList = new ArrayList<>();
             List<Exception> errors = new ArrayList<>(1);
 
-            try {
+            try
+            {
                 // 1. 폴더 ID 가져오기
                 String folderId = getFolderIdByPath(fullPath);
 
-                if (folderId == null) {
+                if (folderId == null)
+                {
                     Log.w(TAG, "Folder path not found: " + fullPath + ". Returning empty list.");
                     handler.post(() -> callback.onSuccess(Collections.emptyList()));
                     return;
@@ -403,29 +432,34 @@ public class DriveManager {
                             .setPageToken(pageToken)
                             .execute();
 
-                    if (result.getFiles() != null) {
+                    if (result.getFiles() != null)
+                    {
                         fileList.addAll(result.getFiles());
                     }
                     pageToken = result.getNextPageToken();
                 } while (pageToken != null);
 
-                if (fileList.isEmpty()) {
+                if (fileList.isEmpty())
+                {
                     Log.d(TAG, "No files found in folder: " + fullPath);
                     handler.post(() -> callback.onSuccess(Collections.emptyList()));
                     return;
                 }
 
                 // 3. 각 파일의 내용을 순차적으로 읽어와 결과 목록에 추가합니다.
-                for (File file : fileList) {
+                for (File file : fileList)
+                {
                     final String fileId = file.getId();
 
-                    try {
+                    try
+                    {
                         // Drive API 호출 (Blocking I/O)
                         InputStream inputStream = driveService.files().get(fileId).executeMediaAsInputStream();
                         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                         byte[] buffer = new byte[1024];
                         int bytesRead;
-                        while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        while ((bytesRead = inputStream.read(buffer)) != -1)
+                        {
                             outputStream.write(buffer, 0, bytesRead);
                         }
                         String content = outputStream.toString("UTF-8");
@@ -433,7 +467,9 @@ public class DriveManager {
                         contentList.add(new Pair<>(fileId, content));
                         Log.d(TAG, "Finished reading content for ID: " + fileId);
 
-                    } catch (IOException e) {
+                    }
+                    catch (IOException e)
+                    {
                         Log.e(TAG, "Error reading content for file ID: " + fileId, e);
                         // 한 파일의 오류가 전체를 실패시키지 않도록 오류는 기록하고 계속 진행합니다.
                         errors.add(e);
@@ -441,15 +477,20 @@ public class DriveManager {
                 }
 
                 // 4. 모든 파일 처리가 완료된 후 결과 반환
-                if (!errors.isEmpty()) {
+                if (!errors.isEmpty())
+                {
                     // 최소한 하나의 파일이라도 읽기 오류가 발생했다면 실패 처리 (첫 번째 오류만 보고)
                     handler.post(() -> callback.onFailure(errors.get(0)));
-                } else {
+                }
+                else
+                {
                     Log.d(TAG, "Finished reading all file contents. Total: " + contentList.size());
                     handler.post(() -> callback.onSuccess(contentList));
                 }
 
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 // 폴더 검색 또는 파일 목록 조회 중 오류 발생
                 Log.e(TAG, "Error reading all file contents from path: " + fullPath, e);
                 handler.post(() -> callback.onFailure(e));
@@ -467,17 +508,20 @@ public class DriveManager {
      * @return 가장 하위 폴더의 ID, 실패 시 null.
      * @throws IOException Drive API 호출 중 오류 발생 시.
      */
-    private String getOrCreateFolderIdByPath(String path) throws IOException {
+    private String getOrCreateFolderIdByPath(String path) throws IOException
+    {
         String[] folderNames = path.split("/");
         String parentId = null; // null은 My Drive 루트를 의미
 
-        for (String folderName : folderNames) {
+        for (String folderName : folderNames)
+        {
             if (folderName.isEmpty()) continue;
 
             // 현재 폴더 이름을 parentId 내에서 찾거나 생성합니다.
             String currentFolderId = findOrCreateFolder(folderName, parentId);
 
-            if (currentFolderId == null) {
+            if (currentFolderId == null)
+            {
                 // 경로 상의 어떤 폴더라도 실패하면 전체 경로 생성 실패
                 Log.e(TAG, "Failed to find or create folder: " + folderName + " in path: " + path);
                 return null;
@@ -494,16 +538,19 @@ public class DriveManager {
      * @return 가장 하위 폴더의 ID, 폴더가 존재하지 않으면 null.
      * @throws IOException Drive API 호출 중 오류 발생 시.
      */
-    private String getFolderIdByPath(String path) throws IOException {
+    private String getFolderIdByPath(String path) throws IOException
+    {
         String[] folderNames = path.split("/");
         String parentId = null;
 
-        for (String folderName : folderNames) {
+        for (String folderName : folderNames)
+        {
             if (folderName.isEmpty()) continue;
 
             String currentFolderId = findFolder(folderName, parentId);
 
-            if (currentFolderId == null) {
+            if (currentFolderId == null)
+            {
                 // 경로 상의 어떤 폴더라도 없으면 null 반환
                 return null;
             }
@@ -519,9 +566,11 @@ public class DriveManager {
      * @return 폴더 ID, 오류 발생 시 null.
      * @throws IOException Drive API 호출 중 오류 발생 시.
      */
-    private String findOrCreateFolder(String folderName, String parentId) throws IOException {
+    private String findOrCreateFolder(String folderName, String parentId) throws IOException
+    {
         String existingId = findFolder(folderName, parentId);
-        if (existingId != null) {
+        if (existingId != null)
+        {
             return existingId; // 이미 존재하면 ID 반환
         }
 
@@ -531,7 +580,8 @@ public class DriveManager {
         folderMetadata.setName(folderName);
         folderMetadata.setMimeType(folderMimeType);
 
-        if (parentId != null) {
+        if (parentId != null)
+        {
             folderMetadata.setParents(Collections.singletonList(parentId));
         }
 
@@ -550,11 +600,13 @@ public class DriveManager {
      * @return 폴더 ID, 없으면 null.
      * @throws IOException Drive API 호출 중 오류 발생 시.
      */
-    private String findFolder(String folderName, String parentId) throws IOException {
+    private String findFolder(String folderName, String parentId) throws IOException
+    {
         String folderMimeType = "application/vnd.google-apps.folder";
         String query = String.format("name = '%s' and mimeType = '%s' and trashed = false", folderName, folderMimeType);
 
-        if (parentId != null) {
+        if (parentId != null)
+        {
             // 특정 부모 내에서 찾기
             query += String.format(" and '%s' in parents", parentId);
         } else {
@@ -571,7 +623,8 @@ public class DriveManager {
 
         List<File> files = result.getFiles();
 
-        if (files != null && !files.isEmpty()) {
+        if (files != null && !files.isEmpty())
+        {
             // 찾은 폴더 ID 반환
             return files.get(0).getId();
         }

@@ -19,13 +19,19 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.team1.roamio.R;
 import com.team1.roamio.data.CountryDao;
 import com.team1.roamio.data.Stamp;
 import com.team1.roamio.data.StampDao;
+import com.team1.roamio.utility.database.DriveManager;
+import com.team1.roamio.utility.stamp.StampJsonParser;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class AddStampActivity extends AppCompatActivity {
 
@@ -113,11 +119,19 @@ public class AddStampActivity extends AppCompatActivity {
         int resId = getResources().getIdentifier(imgName, "drawable", getPackageName());
         stamp.setImageName(resId != 0 ? imgName : "stamp_00");
 
-        new StampDao(this).insertStamp(stamp);
+        DriveManager driveManager = new DriveManager(this);
+        driveManager.initialize(GoogleSignIn.getLastSignedInAccount(this));
+        driveManager.saveStampJson("stamp_" + stamp.getId(), StampJsonParser.toJson(stamp));
 
-        // 성공 메시지와 함께 종료 -> Fragment로 돌아감
-        Toast.makeText(this, "스탬프 획득 완료!", Toast.LENGTH_SHORT).show();
-        finish();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(()->{
+                    finishedProcess();
+                });
+            }
+        }, 3000);
     }
 
     private String getIsoCode(double lat, double lon) {
@@ -129,6 +143,11 @@ public class AddStampActivity extends AppCompatActivity {
             }
         } catch (Exception e) { e.printStackTrace(); }
         return null;
+    }
+
+    private void finishedProcess() {
+        Toast.makeText(this, "스탬프 획득 완료!", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override
