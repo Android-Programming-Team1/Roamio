@@ -185,7 +185,7 @@ public class ActivityPlanning5 extends AppCompatActivity {
         finalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SavedUserData.isShowSavedData = false;
+                SavedUserData.resultShowType = SavedUserData.SHOW_NEW;
                 // 결과 화면으로 이동
                 Intent intent = new Intent(ActivityPlanning5.this, ActivityPlanningResult.class);
                 startActivity(intent);

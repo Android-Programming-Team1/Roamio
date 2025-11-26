@@ -153,7 +153,7 @@ public class SavedPlanDataActivity extends AppCompatActivity {
 
             adapter.setOnItemClickListener((position, item) -> {
                 // 선택된 계획 데이터를 전역 변수에 설정합니다.
-                SavedUserData.isShowSavedData = true;
+                SavedUserData.resultShowType = SavedUserData.SHOW_SAVED;
                 SavedUserData.planData = item.second; // Pair의 second는 TravelPlanData 객체입니다.
 
                 // 계획 결과 화면으로 이동합니다.

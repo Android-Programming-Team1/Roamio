@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Roamio">
         <activity
+            android:name=".view.ui.activity.FixPlanActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.ui.activity.SavedPlanDataActivity"
             android:exported="false" />
         <activity

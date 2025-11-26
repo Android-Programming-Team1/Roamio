@@ -66,7 +66,8 @@ public class PlanDataResultListViewAdapter extends RecyclerView.Adapter<Recycler
         if (holder instanceof PlaceItemHolder) {
             ((PlaceItemHolder) holder).textView.setText(text);
 
-        } else if (holder instanceof ChannelItemHolder) {
+        }
+        else if (holder instanceof ChannelItemHolder) {
             ((ChannelItemHolder) holder).textView.setText(text);
         }
 
