@@ -1,6 +1,5 @@
 package com.team1.roamio.view.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,43 +14,47 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.textfield.TextInputEditText;
 import com.team1.roamio.R;
 import com.team1.roamio.utility.planner.SavedUserData;
 
-public class ActivityPlanning4 extends AppCompatActivity {
-    ImageButton backButton;
-    Button nextButton;
-    EditText text;
+public class FixPlanActivity extends AppCompatActivity {
+
     private ImageView icon;
+    private ImageButton backBtn;
+    private Button nextBtn;
+    private EditText newLocatTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_planning_4);
+        setContentView(R.layout.activity_fix_plan);
 
         icon = findViewById(R.id.imageView7);
+        backBtn = findViewById(R.id.imageButton6);
+        nextBtn = findViewById(R.id.nextButton);
+        newLocatTxt = findViewById(R.id.countryInput);
+
         Glide.with(this).asGif().load(R.drawable.romeo1).into(icon);
 
-        backButton = findViewById(R.id.imageButton8);
+        SavedUserData.isBackFromFix = true;
 
-        backButton.setOnClickListener(new View.OnClickListener() {
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 finish();
             }
         });
-        text = findViewById(R.id.countryInput);
-        nextButton = findViewById(R.id.nextButton);
-        nextButton.setOnClickListener(new View.OnClickListener() {
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                SavedUserData.country = text.getText().toString();
-                Intent intent = new Intent(ActivityPlanning4.this, ActivityPlanning1.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                SavedUserData.fixResult = newLocatTxt.getText().toString();
+                SavedUserData.isBackFromFix = false;
+                SavedUserData.resultShowType = SavedUserData.SHOW_FIX;
+
+                finish();
             }
         });
-
     }
 }

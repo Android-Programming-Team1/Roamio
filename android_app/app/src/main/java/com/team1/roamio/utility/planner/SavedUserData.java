@@ -16,5 +16,15 @@ public class SavedUserData {
 
     public static TravelPlanData planData = null;
 
-    public static boolean isShowSavedData = false;
+    public static int resultShowType = 0; //0: new, 1: saved, 2:fix
+
+    public static String fixTarget = "";
+
+    public static String fixResult = "";
+
+    public static boolean isBackFromFix = false;
+
+    public static final int SHOW_NEW = 0;
+    public static final int SHOW_SAVED = 1;
+    public static final int SHOW_FIX = 2;
 }

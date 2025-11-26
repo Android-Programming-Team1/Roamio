@@ -85,14 +85,28 @@ public class ActivityPlanningResult extends AppCompatActivity {
 
             }
         });
+    }
 
-        if (SavedUserData.isShowSavedData) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (SavedUserData.resultShowType == SavedUserData.SHOW_SAVED) {
             saveButton.setVisibility(View.GONE);
             showSavedData();
         }
+        else if(SavedUserData.resultShowType == SavedUserData.SHOW_NEW){
+            if(SavedUserData.isBackFromFix) {
+                SavedUserData.isBackFromFix = false;
+            }
+            else {
+                saveButton.setVisibility(View.VISIBLE);
+                getResult(false);
+            }
+        }
         else {
             saveButton.setVisibility(View.VISIBLE);
-            getResult();
+            getResult(true);
         }
     }
 
@@ -129,88 +143,168 @@ public class ActivityPlanningResult extends AppCompatActivity {
         PlanDataResultListViewAdapter adapter = new PlanDataResultListViewAdapter(data);
 
         adapter.setOnItemClickListener((position, item) -> {
-            if (item.second == null) return;
-
-            String url = item.second;
-
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(intent);
+            listItemAction(position, item, planData);
         });
 
         resultList.setAdapter(adapter);
         loadingIcon.setVisibility(View.GONE);
     }
 
-    public void getResult() {
+    public void getResult(boolean isFix) {
         try {
+            resultList.setVisibility(View.INVISIBLE);
+            loadingIcon.setVisibility(View.VISIBLE);
+
             String styleStr = "";
 
             for (var entry : SavedUserData.userStyle.entrySet()) {
                 if (entry.getValue()) styleStr += entry.getKey() + ", ";
             }
 
-            TravelPlanBuilder.planDataBuilder()
-                    .setStayDuration(SavedUserData.day)
-                    .setIsHardPlan(SavedUserData.style)
-                    .setHotelLocation(SavedUserData.hotelLocation)
-                    .setVisitCountry(SavedUserData.country)
-                    .setPreference(styleStr)
-                    .build(new PlanBuildCallback() {
-                        @Override
-                        public void onSuccess(TravelPlanData planData) {
-                            SavedUserData.planData = planData;
+            if (!isFix) {
+                TravelPlanBuilder.planDataBuilder()
+                        .setStayDuration(SavedUserData.day)
+                        .setIsHardPlan(SavedUserData.style)
+                        .setHotelLocation(SavedUserData.hotelLocation)
+                        .setVisitCountry(SavedUserData.country)
+                        .setPreference(styleStr)
+                        .build(new PlanBuildCallback() {
+                            @Override
+                            public void onSuccess(TravelPlanData planData) {
+                                resultList.setVisibility(View.VISIBLE);
 
-                            resultList.setLayoutManager(new LinearLayoutManager(ActivityPlanningResult.this));
+                                SavedUserData.planData = planData;
 
-                            List<Pair<String, String>> data = new ArrayList<>();
-                            boolean isFirst = true;
+                                resultList.setLayoutManager(new LinearLayoutManager(ActivityPlanningResult.this));
 
-                            for (var dailyPlan : planData.getDailyPlans()) {
-                                for (var activity : dailyPlan.getActivities()) {
-                                    if(isFirst) isFirst = false;
-                                    else data.add(new Pair<>(activity.getTransport().getEstimatedTime(), activity.getTransport().getGoogleMapLink()));
+                                List<Pair<String, String>> data = new ArrayList<>();
+                                boolean isFirst = true;
 
-                                    data.add(new Pair<>(activity.getTitle(), null));
+                                for (var dailyPlan : planData.getDailyPlans()) {
+                                    for (var activity : dailyPlan.getActivities()) {
+                                        if (isFirst) isFirst = false;
+                                        else
+                                            data.add(new Pair<>(activity.getTransport().getEstimatedTime(), activity.getTransport().getGoogleMapLink()));
+
+                                        data.add(new Pair<>(activity.getTitle(), null));
+                                    }
+
                                 }
 
+                                PlanDataResultListViewAdapter adapter = new PlanDataResultListViewAdapter(data);
+
+                                adapter.setOnItemClickListener((position, item) -> {
+                                    listItemAction(position, item, planData);
+                                });
+
+
+                                resultList.setAdapter(adapter);
+
+                                SavedUserData.resultShowType = SavedUserData.SHOW_SAVED;
+
+                                loadingIcon.setVisibility(View.GONE);
                             }
 
-                            PlanDataResultListViewAdapter adapter = new PlanDataResultListViewAdapter(data);
+                            @Override
+                            public void onError(Exception e) {
+                                resultList.setVisibility(View.VISIBLE);
 
-                            adapter.setOnItemClickListener((position, item) -> {
-                                if (item.second == null) return;
+                                resultList.setLayoutManager(new LinearLayoutManager(ActivityPlanningResult.this));
 
-                                String url = item.second;
+                                List<Pair<String, String>> data = new ArrayList<>();
 
-                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                                startActivity(intent);
-                            });
+                                data.add(new Pair<>("api 오류로 현재 기능을 사용할 수 없습니다.", null));
+
+                                PlanDataResultListViewAdapter adapter = new PlanDataResultListViewAdapter(data);
+                                resultList.setAdapter(adapter);
+
+                                loadingIcon.setVisibility(View.GONE);
+                            }
+                        });
+            }
+            else {
+                TravelPlanBuilder.planDataBuilder()
+                        .setStayDuration(SavedUserData.day)
+                        .setIsHardPlan(SavedUserData.style)
+                        .setHotelLocation(SavedUserData.hotelLocation)
+                        .setVisitCountry(SavedUserData.country)
+                        .setPreference(styleStr)
+                        .FixPlan(SavedUserData.fixTarget, SavedUserData.fixResult, SavedUserData.planData, new PlanBuildCallback() {
+                            @Override
+                            public void onSuccess(TravelPlanData planData) {
+                                resultList.setVisibility(View.VISIBLE);
+
+                                SavedUserData.planData = planData;
+
+                                resultList.setLayoutManager(new LinearLayoutManager(ActivityPlanningResult.this));
+
+                                List<Pair<String, String>> data = new ArrayList<>();
+                                boolean isFirst = true;
+
+                                for (var dailyPlan : planData.getDailyPlans()) {
+                                    for (var activity : dailyPlan.getActivities()) {
+                                        if (isFirst) isFirst = false;
+                                        else
+                                            data.add(new Pair<>(activity.getTransport().getEstimatedTime(), activity.getTransport().getGoogleMapLink()));
+
+                                        data.add(new Pair<>(activity.getTitle(), null));
+                                    }
+
+                                }
+
+                                PlanDataResultListViewAdapter adapter = new PlanDataResultListViewAdapter(data);
+
+                                adapter.setOnItemClickListener((position, item) -> {
+                                    listItemAction(position, item, planData);
+                                });
 
 
+                                resultList.setAdapter(adapter);
 
-                            resultList.setAdapter(adapter);
+                                SavedUserData.resultShowType = SavedUserData.SHOW_SAVED;
 
-                            loadingIcon.setVisibility(View.GONE);
-                        }
+                                loadingIcon.setVisibility(View.GONE);
+                            }
 
-                        @Override
-                        public void onError(Exception e) {
-                            resultList.setLayoutManager(new LinearLayoutManager(ActivityPlanningResult.this));
+                            @Override
+                            public void onError(Exception e) {
+                                resultList.setVisibility(View.VISIBLE);
 
-                            List<Pair<String, String>> data = new ArrayList<>();
+                                resultList.setLayoutManager(new LinearLayoutManager(ActivityPlanningResult.this));
 
-                            data.add(new Pair<>("api 오류로 현재 기능을 사용할 수 없습니다.", null));
+                                List<Pair<String, String>> data = new ArrayList<>();
 
-                            PlanDataResultListViewAdapter adapter = new PlanDataResultListViewAdapter(data);
-                            resultList.setAdapter(adapter);
+                                data.add(new Pair<>("api 오류로 현재 기능을 사용할 수 없습니다.", null));
 
-                            loadingIcon.setVisibility(View.GONE);
-                        }
-                    });
+                                PlanDataResultListViewAdapter adapter = new PlanDataResultListViewAdapter(data);
+                                resultList.setAdapter(adapter);
+
+                                loadingIcon.setVisibility(View.GONE);
+                            }
+                        });
+            }
         }
         catch (JSONException e) {
             Log.e("error", e.getMessage());
             Toast.makeText(ActivityPlanningResult.this, "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    private void listItemAction(int position, Pair<String, String> item, TravelPlanData data) {
+        if (item.second == null) {
+            SavedUserData.planData = data;
+            SavedUserData.fixTarget = item.first;
+
+            Intent intent = new Intent(ActivityPlanningResult.this, FixPlanActivity.class);
+            startActivity(intent);
+
+            return;
+        }
+
+        String url = item.second;
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
     }
 }
