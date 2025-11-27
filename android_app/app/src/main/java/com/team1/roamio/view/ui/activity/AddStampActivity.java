@@ -99,8 +99,8 @@ public class AddStampActivity extends AppCompatActivity {
             return;
         }
 
-        // DB에서 해당 국가 ID 조회 (이전 답변의 CountryDao 메서드 활용)
         CountryDao countryDao = new CountryDao(this);
+
         Long countryId = countryDao.getCountryIdByIsoCode(isoCode);
 
         if (countryId == null) {
@@ -109,15 +109,26 @@ public class AddStampActivity extends AppCompatActivity {
             return;
         }
 
+        // CountryDao를 통해 countries 테이블에서 저장할 이미지 이름을 가져옴
+        String imgNameFromDb = countryDao.getStampNameByCountryId(countryId);
+
         // 스탬프 DB 저장
         Stamp stamp = new Stamp();
         stamp.setCountryId(countryId);
         stamp.setStampedAt(System.currentTimeMillis());
-        // 이미지 이름 자동 매칭 (예: stamp_kr, stamp_jp)
-        String imgName = "stamp_" + isoCode.toLowerCase();
-        // 이미지가 리소스에 없으면 기본값
-        int resId = getResources().getIdentifier(imgName, "drawable", getPackageName());
-        stamp.setImageName(resId != 0 ? imgName : "stamp_00");
+
+        // 가져온 이미지 이름을 Stamp 객체에 설정
+        if (imgNameFromDb != null && !imgNameFromDb.isEmpty()) {
+            stamp.setImageName(imgNameFromDb);
+        } else {
+            // DB에 stampName이 설정되어 있지 않을 경우의 기본값
+            stamp.setImageName("stamp_00");
+        }
+
+        // StampDao 인스턴스 생성 및 DB 저장
+        StampDao stampDao = new StampDao(this);
+        long stampId = stampDao.insertStamp(stamp); // DB에 저장하고 ID를 받음
+        stamp.setId(stampId); // 저장된 ID를 Stamp 객체에 설정
 
         DriveManager driveManager = new DriveManager(this);
         driveManager.initialize(GoogleSignIn.getLastSignedInAccount(this));
