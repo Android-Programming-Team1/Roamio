@@ -145,14 +145,6 @@ public class AIRecommendFragment extends Fragment {
         double[] location = getLocation();
 
         if(location == null) {
-            TextView placeName1 = view.findViewById(R.id.txt_place_name1);
-            TextView placeName2 = view.findViewById(R.id.txt_place_name2);
-            TextView placeName3 = view.findViewById(R.id.txt_place_name3);
-
-            placeName1.setText("위치 권한 없음");
-            placeName2.setText("위치 권한 없음");
-            placeName3.setText("위치 권한 없음");
-
             return false;
         }
 

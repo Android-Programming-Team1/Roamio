@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +48,11 @@ public class ActivityPlanning4 extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (text.getText().toString().isBlank()) {
+                    Toast.makeText(ActivityPlanning4.this, "국가명을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 SavedUserData.country = text.getText().toString();
                 Intent intent = new Intent(ActivityPlanning4.this, ActivityPlanning1.class);
                 startActivity(intent);

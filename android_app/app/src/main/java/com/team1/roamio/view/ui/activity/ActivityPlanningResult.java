@@ -97,6 +97,7 @@ public class ActivityPlanningResult extends AppCompatActivity {
         }
         else if(SavedUserData.resultShowType == SavedUserData.SHOW_NEW){
             if(SavedUserData.isBackFromFix) {
+                saveButton.setVisibility(View.VISIBLE);
                 SavedUserData.isBackFromFix = false;
             }
             else {
