@@ -150,12 +150,13 @@
 
         <Button
             android:id="@+id/finalbutton"
-            android:layout_width="147dp"
-            android:layout_height="83dp"
-            android:backgroundTint="@color/white"
-            android:textSize="16dp"
+            android:layout_width="250dp"
+            android:layout_height="54dp"
+            android:background="@drawable/bg_button"
             android:text="결과 확인"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/stylebutton6"
             app:layout_constraintStart_toStartOf="@+id/stylebutton5"

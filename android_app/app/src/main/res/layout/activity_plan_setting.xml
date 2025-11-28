@@ -44,7 +44,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/btnIntroduce"
         android:layout_width="0dp"
         android:layout_height="50dp"
