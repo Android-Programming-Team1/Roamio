@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_roamio"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Roamio">
+        android:theme="@style/Theme.Design.Light.NoActionBar">
         <activity
             android:name=".view.ui.activity.FixPlanActivity"
             android:exported="false" />
@@ -25,7 +25,7 @@
             android:name=".view.ui.activity.AddStampActivity"
             android:exported="false" />
         <activity
-            android:name=".view.ui.PlanSettingActivity"
+            android:name=".view.ui.activity.PlanSettingActivity"
             android:exported="false" />
         <activity
             android:name=".view.ui.activity.ActivityPlanningResult"
@@ -44,9 +44,6 @@
             android:exported="false" />
         <activity
             android:name=".view.ui.activity.ActivityPlanning1"
-            android:exported="false" />
-        <activity
-            android:name=".view.ui.activity.PlanSettingActivity"
             android:exported="false" />
         <activity
             android:name=".view.ui.activity.LayoutActivity"

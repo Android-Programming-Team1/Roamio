@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -43,6 +44,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import kotlin.Triple;
 
@@ -66,6 +68,7 @@ public class MyPageFragment extends Fragment {
     private ImageButton logoutButton;
 
     private ImageView icon;
+    private TextView textView;
 
 
     public MyPageFragment() {
@@ -108,8 +111,11 @@ public class MyPageFragment extends Fragment {
         savedListButton = view.findViewById(R.id.imageButton9);
         logoutButton = view.findViewById(R.id.imageButton10);
         icon = view.findViewById(R.id.imageView19);
+        textView = view.findViewById(R.id.textView7);
 
         Glide.with(getActivity()).asGif().load(R.drawable.romeo1).into(icon);
+
+        setWelcomText();
 
         savedListButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,5 +147,32 @@ public class MyPageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    private void setWelcomText() {
+        int rand = (new Random()).nextInt(5);
+        String name = SavedUserData.userName;
+
+        switch (rand) {
+            case 0:
+                textView.setText("반가워요 " + name + "님!\n여행 계획 짜는 걸 좋아하는 '로미'에요!");
+                break;
+
+            case 1:
+                textView.setText("어서오세요 " + name + "님!\n로미와 함께 멋진 여행 계획 만들어봐요 :)");
+                break;
+
+            case 2:
+                textView.setText(name + "님, 다시 만나서 반가워요!\n여행을 더 즐겁게 만들어주는 로미예요.");
+                break;
+
+            case 3:
+                textView.setText("안녕하세요 " + name + "님!\n로미가 최고의 여행 코스를 준비해드릴게요!");
+                break;
+
+            default:
+                textView.setText("환영해요 " + name + "님 :)\n여행의 설렘을 함께 채워가는 로미입니다!");
+                break;
+        }
     }
 }

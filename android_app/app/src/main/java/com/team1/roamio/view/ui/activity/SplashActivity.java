@@ -21,6 +21,7 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.Task;
 import com.google.api.services.drive.DriveScopes;
 import com.team1.roamio.R;
+import com.team1.roamio.utility.planner.SavedUserData;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -109,6 +110,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void handleSignInSuccess(GoogleSignInAccount account) {
+        SavedUserData.userName = account.getDisplayName();
         Toast.makeText(this, account.getDisplayName() + "님 환영합니다!", Toast.LENGTH_SHORT).show();
 
         // 1. Google Drive 서비스 초기화

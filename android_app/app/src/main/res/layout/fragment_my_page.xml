@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="저는 여행 계획 짜는 일을 좋아해요!"
+            android:textAlignment="center"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

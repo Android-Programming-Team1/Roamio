@@ -30,6 +30,7 @@ import com.team1.roamio.R;
 import com.team1.roamio.utility.ai.AttractionData;
 import com.team1.roamio.utility.ai.NearbyAttractionRecommender;
 import com.team1.roamio.utility.ai.RecommendationCallback;
+import com.team1.roamio.utility.planner.SavedUserData;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class AIRecommendFragment extends Fragment {
     private String mParam2;
 
     private ImageView icon;
+    private TextView textView;
 
     private final String[] PERMISSIONS = {
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -91,7 +93,10 @@ public class AIRecommendFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ai_recommend, container, false);
 
         icon = view.findViewById(R.id.imageView6);
+        textView = view.findViewById(R.id.textView4);
+
         Glide.with(getActivity()).asGif().load(R.drawable.romeo1).into(icon);
+        textView.setText(SavedUserData.userName + "님과 딱 맞는 여행지를 발견했어요!");
 
         while(!initView(view)) { Log.d("initView", "initView fail"); }
 

@@ -21,6 +21,7 @@ public class SavedUserData {
     public static String fixTarget = "";
 
     public static String fixResult = "";
+    public static String userName = "";
 
     public static boolean isBackFromFix = false;
 
