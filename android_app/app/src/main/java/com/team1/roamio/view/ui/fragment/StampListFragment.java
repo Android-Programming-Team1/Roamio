@@ -120,41 +120,60 @@ public class StampListFragment extends Fragment {
     }
 
     /** 일반 스탬프 아이템 데이터 연결 */
+    /** 일반 스탬프 아이템 데이터 연결 */
     private void applyStampData(View item, Stamp stamp) {
         ImageButton imgButton = item.findViewById(R.id.stamp_image);
         TextView countryText = item.findViewById(R.id.text_country);
         TextView dateText = item.findViewById(R.id.text_date);
         TextView descText = item.findViewById(R.id.text_desc);
 
-        // --- 국가 이름 설정 ---
+        // 국가 이름 설정
         String countryName = countryDao.getCountryNameById(stamp.getCountryId());
         countryText.setText(countryName != null ? countryName : "Unknown");
 
-        // --- 날짜 설정 ---
+        // 날짜 설정 (밀리초 -> 날짜 변환)
         try {
-            Date date = new Date(stamp.getStampedAt());
-            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
-            dateText.setText(sdf.format(date));
+            long timeValue = stamp.getStampedAt();
+            // 기존 8자리 데이터(20240308)와 새 데이터(밀리초) 호환 처리
+            if (String.valueOf(timeValue).length() <= 8) {
+                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMdd", Locale.US);
+                Date date = inputFormat.parse(String.valueOf(timeValue));
+                SimpleDateFormat outputFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
+                dateText.setText(outputFormat.format(date));
+            } else {
+                Date date = new Date(timeValue);
+                SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
+                dateText.setText(sdf.format(date));
+            }
         } catch (Exception e) {
             dateText.setText("Invalid Date");
         }
 
-        // --- 이미지 설정 ---
+        // 이미지 설정
         String stampName = stamp.getImageName();
+
         Context context = getContext();
-        if (context != null && stampName != null) {
-            // DB에 저장된 이름(예: stamp_01)으로 drawable ID 찾기
+        if (context != null && stampName != null && !stampName.isEmpty()) {
+
+            if (stampName.contains(".")) {
+                stampName = stampName.substring(0, stampName.lastIndexOf("."));
+            }
+
+            // "seoul" 문자열 -> R.drawable.seoul ID 변환
             int resId = context.getResources().getIdentifier(
                     stampName, "drawable", context.getPackageName()
             );
 
-            // 만약 못 찾으면 기본 이미지 stamp_00
-            if (resId == 0) resId = R.drawable.stamp_00;
-
-            imgButton.setImageResource(resId);
+            // 이미지가 있으면 출력, 없으면 기본 이미지(stamp_00)
+            if (resId != 0) {
+                imgButton.setImageResource(resId);
+            } else {
+                imgButton.setImageResource(R.drawable.stamp_00);
+            }
+        } else {
+            imgButton.setImageResource(R.drawable.stamp_00);
         }
 
-        // --- 설명 숨김 (필요시 사용) ---
         descText.setVisibility(View.GONE);
     }
 }

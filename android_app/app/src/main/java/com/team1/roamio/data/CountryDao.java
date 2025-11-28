@@ -20,6 +20,28 @@ public class CountryDao {
         this.dbHelper = new TravelDatabaseHelper(context);
     }
 
+    /**
+     * 국가 ID를 이용해 해당 국가에 지정된 스탬프 이미지 이름(stampName)을 가져옴
+     */
+    public String getStampNameByCountryId(long countryId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String stampName = null;
+
+        // 쿼리: id가 countryId인 행에서 stampName 컬럼을 선택
+        String query = "SELECT stampName FROM " + TravelDatabaseHelper.TABLE_COUNTRIES + " WHERE id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(countryId)});
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                // 인덱스 0에서 stampName을 가져옴
+                stampName = cursor.getString(0);
+            }
+            cursor.close();
+        }
+        db.close();
+        return stampName;
+    }
+
     /** * ID로 국가 이름 조회
      * (StampListFragment에서 사용)
      */
