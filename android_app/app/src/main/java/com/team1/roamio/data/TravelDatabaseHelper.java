@@ -14,7 +14,7 @@ import java.io.OutputStream;
 public class TravelDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "stampDB.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     public static final String TABLE_COUNTRIES = "countries";
     public static final String TABLE_STAMPS = "stamps";
 
