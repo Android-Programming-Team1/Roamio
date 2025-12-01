@@ -1,6 +1,7 @@
 package com.team1.roamio.view.ui.activity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList; // [추가됨] 틴트 변경을 위해 필요
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -10,9 +11,6 @@ import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.team1.roamio.R;
@@ -47,7 +45,6 @@ public class ActivityPlanning5 extends AppCompatActivity {
         icon = findViewById(R.id.imageView7);
         Glide.with(this).asGif().load(R.drawable.romeo1).into(icon);
 
-
         // 1. 뒤로 가기 버튼 설정
         backButton = findViewById(R.id.imageButton6);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -65,16 +62,16 @@ public class ActivityPlanning5 extends AppCompatActivity {
         imgBtn5 = findViewById(R.id.stylebutton5);
         imgBtn6 = findViewById(R.id.stylebutton6);
 
-        imgBtn1.setBackgroundColor(UNSELECTED_COLOR);
-        imgBtn2.setBackgroundColor(UNSELECTED_COLOR);
-        imgBtn3.setBackgroundColor(UNSELECTED_COLOR);
-        imgBtn4.setBackgroundColor(UNSELECTED_COLOR);
-        imgBtn5.setBackgroundColor(UNSELECTED_COLOR);
-        imgBtn6.setBackgroundColor(UNSELECTED_COLOR);
+        // [수정됨] setBackgroundColor -> setBackgroundTintList 사용
+        imgBtn1.setBackgroundTintList(ColorStateList.valueOf(UNSELECTED_COLOR));
+        imgBtn2.setBackgroundTintList(ColorStateList.valueOf(UNSELECTED_COLOR));
+        imgBtn3.setBackgroundTintList(ColorStateList.valueOf(UNSELECTED_COLOR));
+        imgBtn4.setBackgroundTintList(ColorStateList.valueOf(UNSELECTED_COLOR));
+        imgBtn5.setBackgroundTintList(ColorStateList.valueOf(UNSELECTED_COLOR));
+        imgBtn6.setBackgroundTintList(ColorStateList.valueOf(UNSELECTED_COLOR));
 
         // SavedUserData.userStyle 맵 초기화
         SavedUserData.userStyle.clear();
-
 
         // 3. 버튼 리스너 설정 (토글 로직 적용 및 업데이트된 Key 사용)
 
@@ -83,12 +80,13 @@ public class ActivityPlanning5 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!checkTog[0]) {
-                    imgBtn1.setBackgroundColor(SELECTED_COLOR);
+                    // [수정됨]
+                    imgBtn1.setBackgroundTintList(ColorStateList.valueOf(SELECTED_COLOR));
                     SavedUserData.userStyle.put("카페·맛집", true);
                     checkTog[0] = true;
-                }
-                else {
-                    imgBtn1.setBackgroundColor(UNSELECTED_COLOR);
+                } else {
+                    // [수정됨]
+                    imgBtn1.setBackgroundTintList(ColorStateList.valueOf(UNSELECTED_COLOR));
                     SavedUserData.userStyle.put("카페·맛집", false);
                     checkTog[0] = false;
                 }
@@ -100,12 +98,13 @@ public class ActivityPlanning5 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!checkTog[1]) {
-                    imgBtn2.setBackgroundColor(SELECTED_COLOR);
+                    // [수정됨]
+                    imgBtn2.setBackgroundTintList(ColorStateList.valueOf(SELECTED_COLOR));
                     SavedUserData.userStyle.put("액티비티", true);
                     checkTog[1] = true;
-                }
-                else {
-                    imgBtn2.setBackgroundColor(UNSELECTED_COLOR);
+                } else {
+                    // [수정됨]
+                    imgBtn2.setBackgroundTintList(ColorStateList.valueOf(UNSELECTED_COLOR));
                     SavedUserData.userStyle.put("액티비티", false);
                     checkTog[1] = false;
                 }
@@ -117,29 +116,31 @@ public class ActivityPlanning5 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!checkTog[2]) {
-                    imgBtn3.setBackgroundColor(SELECTED_COLOR);
+                    // [수정됨]
+                    imgBtn3.setBackgroundTintList(ColorStateList.valueOf(SELECTED_COLOR));
                     SavedUserData.userStyle.put("문화·예술", true);
                     checkTog[2] = true;
-                }
-                else {
-                    imgBtn3.setBackgroundColor(UNSELECTED_COLOR);
+                } else {
+                    // [수정됨]
+                    imgBtn3.setBackgroundTintList(ColorStateList.valueOf(UNSELECTED_COLOR));
                     SavedUserData.userStyle.put("문화·예술", false);
                     checkTog[2] = false;
                 }
             }
         });
 
-        // imgBtn4: 휴식·힐링 (XML 수정 반영)
+        // imgBtn4: 휴식·힐링
         imgBtn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!checkTog[3]) {
-                    imgBtn4.setBackgroundColor(SELECTED_COLOR);
+                    // [수정됨]
+                    imgBtn4.setBackgroundTintList(ColorStateList.valueOf(SELECTED_COLOR));
                     SavedUserData.userStyle.put("휴식·힐링", true);
                     checkTog[3] = true;
-                }
-                else {
-                    imgBtn4.setBackgroundColor(UNSELECTED_COLOR);
+                } else {
+                    // [수정됨]
+                    imgBtn4.setBackgroundTintList(ColorStateList.valueOf(UNSELECTED_COLOR));
                     SavedUserData.userStyle.put("휴식·힐링", false);
                     checkTog[3] = false;
                 }
@@ -151,12 +152,13 @@ public class ActivityPlanning5 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!checkTog[4]) {
-                    imgBtn5.setBackgroundColor(SELECTED_COLOR);
+                    // [수정됨]
+                    imgBtn5.setBackgroundTintList(ColorStateList.valueOf(SELECTED_COLOR));
                     SavedUserData.userStyle.put("자연·야외", true);
                     checkTog[4] = true;
-                }
-                else {
-                    imgBtn5.setBackgroundColor(UNSELECTED_COLOR);
+                } else {
+                    // [수정됨]
+                    imgBtn5.setBackgroundTintList(ColorStateList.valueOf(UNSELECTED_COLOR));
                     SavedUserData.userStyle.put("자연·야외", false);
                     checkTog[4] = false;
                 }
@@ -168,12 +170,13 @@ public class ActivityPlanning5 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!checkTog[5]) {
-                    imgBtn6.setBackgroundColor(SELECTED_COLOR);
+                    // [수정됨]
+                    imgBtn6.setBackgroundTintList(ColorStateList.valueOf(SELECTED_COLOR));
                     SavedUserData.userStyle.put("쇼핑", true);
                     checkTog[5] = true;
-                }
-                else {
-                    imgBtn6.setBackgroundColor(UNSELECTED_COLOR);
+                } else {
+                    // [수정됨]
+                    imgBtn6.setBackgroundTintList(ColorStateList.valueOf(UNSELECTED_COLOR));
                     SavedUserData.userStyle.put("쇼핑", false);
                     checkTog[5] = false;
                 }
