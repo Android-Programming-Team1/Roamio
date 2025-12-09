@@ -31,9 +31,6 @@ public class SplashActivity extends AppCompatActivity {
 
     private ImageView icon;
 
-    // TODO: 4.1 Drive 서비스 초기화를 위해 필요한 필드를 여기에 추가하세요.
-    // private Drive driveService;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,17 +39,10 @@ public class SplashActivity extends AppCompatActivity {
         icon = findViewById(R.id.roamio_icon);
 
         Glide.with(this).asGif().load(R.drawable.romeo1).into(icon);
-
         // 1. Google Sign-In 옵션 구성 (필요한 Scope 추가)
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
-                // 서버에서 인증을 처리하려면 .requestIdToken(getString(R.string.server_client_id)) 추가
-
-                // *** Google Drive 파일 접근 권한 요청 (핵심) ***
-                // 앱이 만든 파일에만 접근 (권장)
                 .requestScopes(new Scope(DriveScopes.DRIVE_FILE))
-                // 전체 드라이브에 접근하는 권한 (사용자가 거부할 가능성 높음)
-                // .requestScopes(new Scope(DriveScopes.DRIVE))
                 .build();
 
         // 2. GoogleSignInClient 생성
@@ -114,22 +104,8 @@ public class SplashActivity extends AppCompatActivity {
         Toast.makeText(this, account.getDisplayName() + "님 환영합니다!", Toast.LENGTH_SHORT).show();
 
         // 1. Google Drive 서비스 초기화
-        // TODO: 4.1에서 구현했던 initializeDriveService(account) 메서드를 여기서 호출하여 Drive 객체를 만드세요.
-        // initializeDriveService(account);
-
-        // 2. 메인 화면으로 전환
         Intent intent = new Intent(SplashActivity.this, LayoutActivity.class); // ***수정 필요***
         startActivity(intent);
         finish();
-
-        // 3. (선택 사항) 로그인 직후 파일 생성 테스트를 하고 싶다면
-        // TODO: 4.2에서 구현했던 createFileInDrive() 메서드를 여기서 호출해 볼 수 있습니다.
-        // createFileInDrive();
     }
-
-    // TODO: 4.1 Drive 서비스 초기화 메서드 (이전 답변 참고)
-    // private void initializeDriveService(GoogleSignInAccount signInAccount) { ... }
-
-    // TODO: 4.2 파일 생성 메서드 (이전 답변 참고)
-    // private void createFileInDrive() { ... }
 }
