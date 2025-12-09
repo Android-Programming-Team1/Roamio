@@ -46,13 +46,7 @@ public class SplashActivity extends AppCompatActivity {
         // 1. Google Sign-In 옵션 구성 (필요한 Scope 추가)
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
-                // 서버에서 인증을 처리하려면 .requestIdToken(getString(R.string.server_client_id)) 추가
-
-                // *** Google Drive 파일 접근 권한 요청 (핵심) ***
-                // 앱이 만든 파일에만 접근 (권장)
                 .requestScopes(new Scope(DriveScopes.DRIVE_FILE))
-                // 전체 드라이브에 접근하는 권한 (사용자가 거부할 가능성 높음)
-                // .requestScopes(new Scope(DriveScopes.DRIVE))
                 .build();
 
         // 2. GoogleSignInClient 생성
