@@ -52,7 +52,10 @@ ROAMIO는 인터넷 서핑으로 소모되는 여행 계획 시간을 줄이기 
    - OAuth 2.0 클라이언트 생성(패키지명 + SHA-1 등록)
    - Drive API v3 활성화
 4. 로컬 설정 (데모 버전에 따라 필요, local.properties)
-   - 아래 예시발)  
+   - 아래 예시발)
+  
+## 팀원
+- 이영욱 - Team Leader & Co-Developer (팀장, 서브 기능, DTO 유틸리티)
 - 주민재 — Scrum Master & Full-stack (아키텍처, OAuth/Drive 연동, 실제 UI)  
 - 조윤주 — Co-Developer (서브 기능, 캐쉬 관리, QA)  
 - 강진아 — UI/UX Design (로고, 테마, 마스코트, 디자인 데모)  
@@ -60,4 +63,3 @@ ROAMIO는 인터넷 서핑으로 소모되는 여행 계획 시간을 줄이기 
 
 ## 라이선스
 MIT License
-
