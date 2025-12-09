@@ -38,7 +38,7 @@ ROAMIO는 인터넷 서핑으로 소모되는 여행 계획 시간을 줄이기 
 - 인증/저장: Google OAuth 2.0, Google Drive API v3 (AppData)  
 - 로컬 DB: SQLite (오프라인 캐시)  
 - UI: Android XML
-- 도구: Android Studio, GitHub, Figma, Slack
+- 도구: Android Studio, GitHub, Figma, Slack, Notion
 
 ## 설치 및 실행 (일반 유저용)
 리포지토리의 apk 폴더 내 apk 다운로드 후 설치
@@ -87,5 +87,5 @@ ROAMIO는 인터넷 서핑으로 소모되는 여행 계획 시간을 줄이기 
 - 유찬우 — AI Developer (데이터 분석 및 AI유틸리티 개발)
 
 ## 라이선스
-MIT License — 자세한 내용은 LICENSE 파일 참조.
+MIT License
 
