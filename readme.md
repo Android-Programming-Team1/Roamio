@@ -45,7 +45,7 @@ ROAMIO는 인터넷 서핑으로 소모되는 여행 계획 시간을 줄이기 
 
 ## 설치 및 실행 (개발자 가이드)
 1. 레포지토리 클론
-   - git clone https://github.com/your-repo/roamio-android.git
+   - git clone [https://github.com/your-repo/roamio-android.git](https://github.com/Android-Programming-Team1/Roamio.git)
 2. Android Studio에서 프로젝트 열기 및 Gradle Sync
 3. Google Cloud 설정
    - Gemini API 활성화(데모 버전에 따라 필요)
